@@ -6,73 +6,59 @@
 <title>iTradeCo · Tareas 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ── PASSWORD SCREEN ── */
-  #lock-screen {
-    position:fixed; inset:0; background:#1a1916;
-    display:flex; align-items:center; justify-content:center;
-    z-index:9999; flex-direction:column; gap:0;
-  }
-  #lock-screen.hidden { display:none; }
-  .lock-box {
-    background:#fff; border-radius:16px; padding:44px 48px;
-    width:380px; text-align:center;
-    box-shadow:0 24px 60px rgba(0,0,0,.35);
-  }
-  .lock-logo {
-    font-family:'Syne',sans-serif; font-size:22px; font-weight:800;
-    color:#1a1916; margin-bottom:6px; letter-spacing:-.5px;
-  }
-  .lock-logo span { opacity:.4; font-weight:400; }
-  .lock-sub { font-size:13px; color:#9b9890; margin-bottom:32px; }
-  .lock-label { font-size:10.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#9b9890; display:block; text-align:left; margin-bottom:7px; }
-  .lock-input {
-    width:100%; padding:11px 14px; border:1.5px solid #e2e0d8;
-    border-radius:8px; font-family:'Inter',sans-serif; font-size:14px;
-    color:#1a1916; outline:none; transition:border-color .15s;
-    margin-bottom:14px; letter-spacing:2px;
-  }
-  .lock-input:focus { border-color:#1a1916; }
-  .lock-btn {
-    width:100%; padding:11px; background:#1a1916; color:#f5f4f0;
-    border:none; border-radius:8px; font-family:'Inter',sans-serif;
-    font-size:14px; font-weight:600; cursor:pointer; transition:opacity .15s;
-  }
-  .lock-btn:hover { opacity:.85; }
-  .lock-error {
-    font-size:12.5px; color:#b83232; margin-top:10px;
-    min-height:18px; font-weight:500;
-  }
-  .lock-hint { font-size:11.5px; color:#c0bfbb; margin-top:18px; }
-
   :root {
-    --bg:#f5f4f0; --surface:#fff; --surface2:#f0efe9; --border:#e2e0d8;
-    --text:#1a1916; --muted:#9b9890;
-    --austar:#2d7d46; --agro:#c47a1e; --b2b:#1a5fa8;
-    --hil:#7b3fa0; --filkhi:#b83232; --koru:#1d6b6b; --admin:#555;
-    --plan-c:#1a5fa8; --plan-bg:rgba(26,95,168,.08);
-    --prog-c:#c47a1e;  --prog-bg:rgba(196,122,30,.08);
-    --done-c:#2d7d46;  --done-bg:rgba(45,125,70,.08);
-    --delay-c:#b83232; --delay-bg:rgba(184,50,50,.08);
-    --wait-c:#7b3fa0;  --wait-bg:rgba(123,63,160,.08);
+    --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:#e2e0d8;
+    --text:#1a1916;--muted:#9b9890;
+    --austar:#2d7d46;--agro:#c47a1e;--b2b:#1a5fa8;
+    --hil:#7b3fa0;--filkhi:#b83232;--koru:#1d6b6b;--admin:#555;
+    --plan-c:#1a5fa8;--plan-bg:rgba(26,95,168,.08);
+    --prog-c:#c47a1e;--prog-bg:rgba(196,122,30,.08);
+    --done-c:#2d7d46;--done-bg:rgba(45,125,70,.08);
+    --delay-c:#b83232;--delay-bg:rgba(184,50,50,.08);
+    --wait-c:#7b3fa0;--wait-bg:rgba(123,63,160,.08);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+  /* LOCK */
+  #lock{position:fixed;inset:0;background:#1a1916;display:flex;align-items:center;justify-content:center;z-index:9999;}
+  #lock.off{display:none;}
+  .lbox{background:#fff;border-radius:16px;padding:44px 48px;width:380px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);}
+  .llogo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1a1916;margin-bottom:6px;}
+  .llogo span{opacity:.4;font-weight:400;}
+  .lsub{font-size:13px;color:#9b9890;margin-bottom:28px;}
+  .llbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9b9890;text-align:left;margin-bottom:6px;}
+  .linp{width:100%;padding:11px 14px;border:1.5px solid #e2e0d8;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:#1a1916;outline:none;margin-bottom:12px;letter-spacing:3px;box-sizing:border-box;}
+  .linp:focus{border-color:#1a1916;}
+  .lbtn{width:100%;padding:11px;background:#1a1916;color:#f5f4f0;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
+  .lerr{font-size:12px;color:#b83232;margin-top:8px;min-height:16px;font-weight:500;}
+  .lhint{font-size:11px;color:#c0bfbb;margin-top:14px;}
+
+  /* LOADING */
+  #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:8888;flex-direction:column;gap:16px;}
+  #loading.off{display:none;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin 0.8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .load-txt{font-size:13px;color:var(--muted);font-weight:500;}
 
   /* HEADER */
   header{background:var(--text);color:#f5f4f0;padding:0 36px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
   .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.5px;}
   .logo span{opacity:.4;font-weight:400;}
-  .hdr-right{display:flex;align-items:center;gap:12px;}
-  .date-pill{font-size:12px;color:rgba(245,244,240,.5);font-weight:500;}
-  .add-btn{padding:7px 15px;background:#f5f4f0;color:var(--text);border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:opacity .15s;}
-  .add-btn:hover{opacity:.82;}
+  .hdr-r{display:flex;align-items:center;gap:10px;}
+  .dpill{font-size:12px;color:rgba(245,244,240,.45);font-weight:500;}
+  .sync-btn{padding:6px 13px;background:rgba(255,255,255,.1);color:#f5f4f0;border:1px solid rgba(255,255,255,.2);border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+  .sync-btn:hover{background:rgba(255,255,255,.18);}
+  .sync-btn.spin svg{animation:spin .8s linear infinite;}
+  .add-btn{padding:7px 15px;background:#f5f4f0;color:var(--text);border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;}
+  .add-btn:hover{opacity:.85;}
 
   /* LAYOUT */
   .app{display:flex;height:calc(100vh - 58px);}
 
   /* SIDEBAR */
   .sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:18px 10px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
-  .slabel{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 10px 5px;margin-top:4px;}
+  .slbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 10px 5px;margin-top:4px;}
   .nbtn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;transition:all .12s;}
   .nbtn:hover{background:var(--surface2);color:var(--text);}
   .nbtn.active{background:var(--text);color:#f5f4f0;}
@@ -86,7 +72,7 @@
   /* KPI */
   .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
   .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
-  .klabel{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+  .klbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
   .kval{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;line-height:1;}
   .ksub{font-size:11px;color:var(--muted);margin-top:3px;}
   .kbar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
@@ -114,37 +100,33 @@
   .grow{background:var(--surface2)!important;cursor:default!important;}
   .grow:hover{background:var(--surface2)!important;}
   .grow td{padding:8px 14px;border-bottom:1px solid var(--border);}
-  .glabel{font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;}
-  .tname{font-weight:500;max-width:320px;}
-
+  .glbl{font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;}
+  .tname{font-weight:500;max-width:340px;}
   .prio{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
   .pQ1{background:rgba(26,25,22,.07);color:var(--text);}
   .pQ2{background:rgba(196,122,30,.1);color:#a06018;}
   .pQ3{background:rgba(26,95,168,.08);color:var(--plan-c);}
-
   .st{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap;}
   .sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-  .splan{background:var(--plan-bg);color:var(--plan-c);}  .splan .sdot{background:var(--plan-c);}
-  .sprog{background:var(--prog-bg);color:var(--prog-c);}  .sprog .sdot{background:var(--prog-c);}
-  .sdone{background:var(--done-bg);color:var(--done-c);}  .sdone .sdot{background:var(--done-c);}
+  .splan{background:var(--plan-bg);color:var(--plan-c);} .splan .sdot{background:var(--plan-c);}
+  .sprog{background:var(--prog-bg);color:var(--prog-c);} .sprog .sdot{background:var(--prog-c);}
+  .sdone{background:var(--done-bg);color:var(--done-c);} .sdone .sdot{background:var(--done-c);}
   .sdelay{background:var(--delay-bg);color:var(--delay-c);} .sdelay .sdot{background:var(--delay-c);}
-  .swait{background:var(--wait-bg);color:var(--wait-c);}  .swait .sdot{background:var(--wait-c);}
-
+  .swait{background:var(--wait-bg);color:var(--wait-c);} .swait .sdot{background:var(--wait-c);}
   .cotag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;}
   .ow{display:inline-flex;align-items:center;gap:5px;font-size:12px;}
   .av{width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--surface2);color:var(--muted);}
   .dt{font-size:12px;color:var(--muted);white-space:nowrap;}
   .dt.ov{color:var(--delay-c);font-weight:600;}
   .dt.sn{color:var(--prog-c);font-weight:600;}
-
   .empty{padding:50px 20px;text-align:center;color:var(--muted);font-size:14px;}
 
   /* MODAL */
   .ovl{display:none;position:fixed;inset:0;background:rgba(26,25,22,.5);backdrop-filter:blur(3px);z-index:500;align-items:center;justify-content:center;}
   .ovl.open{display:flex;}
-  .modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;width:580px;max-height:85vh;overflow-y:auto;animation:mIn .18s ease;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;width:580px;max-height:88vh;overflow-y:auto;animation:mIn .18s ease;}
   @keyframes mIn{from{transform:translateY(8px) scale(.98);opacity:0;}}
-  .mhdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:12px;}
+  .mhdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px;}
   .mtitle{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;line-height:1.3;}
   .mx{width:28px;height:28px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .mx:hover{color:var(--text);}
@@ -152,19 +134,27 @@
   .ff{display:flex;flex-direction:column;gap:4px;}
   .ff.full{grid-column:1/-1;}
   .ff label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
-  .fi,.fs,.fta{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .12s;width:100%;}
+  .fi,.fs,.fta{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .12s;width:100%;}
   .fi:focus,.fs:focus,.fta:focus{border-color:var(--text);}
-  .fs option{background:var(--surface);}
   .fta{resize:vertical;min-height:70px;}
   .mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;}
-  .btn{padding:7px 16px;border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .12s;}
+  .btn{padding:8px 18px;border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .12s;}
   .bsec{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
   .bsec:hover{color:var(--text);}
   .bpri{background:var(--text);color:#f5f4f0;}
   .bpri:hover{opacity:.85;}
+  .bpri:disabled{opacity:.5;cursor:not-allowed;}
   .bdel{background:var(--delay-bg);color:var(--delay-c);border:1px solid rgba(184,50,50,.2);}
-  .bdel:hover{background:rgba(184,50,50,.15);}
 
+  /* SETUP BANNER */
+  .setup-banner{background:#fff8e6;border:1px solid #f4c430;border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;}
+  .setup-banner.off{display:none;}
+  .setup-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+  .setup-txt{font-size:13px;line-height:1.6;}
+  .setup-txt strong{color:var(--text);}
+  .setup-txt code{background:#f0efe9;padding:1px 6px;border-radius:4px;font-size:12px;font-family:monospace;}
+
+  /* TOAST */
   .toast{position:fixed;bottom:22px;right:22px;background:var(--text);color:#f5f4f0;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .25s;z-index:9999;pointer-events:none;}
   .toast.show{opacity:1;transform:translateY(0);}
 
@@ -175,36 +165,40 @@
 </head>
 <body>
 
-<!-- ── PANTALLA DE ACCESO ── -->
-<div id="lock-screen" style="position:fixed;inset:0;background:#1a1916;display:flex;align-items:center;justify-content:center;z-index:9999;">
-  <div style="background:#fff;border-radius:16px;padding:44px 48px;width:380px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);">
-    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1a1916;margin-bottom:6px;letter-spacing:-.5px;">iTradeCo <span style="opacity:.4;font-weight:400;">· Tareas 2026</span></div>
-    <div style="font-size:13px;color:#9b9890;margin-bottom:32px;">Acceso restringido al equipo</div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9b9890;text-align:left;margin-bottom:7px;">Contraseña de acceso</div>
-    <input type="password" id="pwd-input" placeholder="••••••••"
-      style="width:100%;padding:11px 14px;border:1.5px solid #e2e0d8;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:#1a1916;outline:none;margin-bottom:14px;letter-spacing:3px;box-sizing:border-box;"
-      onkeydown="if(event.key==='Enter')unlock()"
-      onfocus="this.style.borderColor='#1a1916'" onblur="this.style.borderColor='#e2e0d8'">
-    <button onclick="unlock()"
-      style="width:100%;padding:11px;background:#1a1916;color:#f5f4f0;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">
-      Entrar →
-    </button>
-    <div id="lock-error" style="font-size:12.5px;color:#b83232;margin-top:10px;min-height:18px;font-weight:500;"></div>
-    <div style="font-size:11.5px;color:#c0bfbb;margin-top:18px;">🔒 Acceso exclusivo iTradeCo</div>
+<!-- LOCK -->
+<div id="lock">
+  <div class="lbox">
+    <div class="llogo">iTradeCo <span>· Tareas 2026</span></div>
+    <div class="lsub">Acceso restringido al equipo</div>
+    <div class="llbl">Contraseña de acceso</div>
+    <input type="password" id="pwd" class="linp" placeholder="••••••••" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="lbtn" onclick="unlock()">Entrar →</button>
+    <div class="lerr" id="lerr"></div>
+    <div class="lhint">🔒 Acceso exclusivo iTradeCo</div>
   </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="load-txt" id="load-txt">Conectando con Google Sheets...</div>
 </div>
 
 <header>
   <div class="logo">iTradeCo <span>· Tareas 2026</span></div>
-  <div class="hdr-right">
-    <span class="date-pill" id="dpill"></span>
+  <div class="hdr-r">
+    <span class="dpill" id="dpill"></span>
+    <button class="sync-btn" id="sync-btn" onclick="loadTasks(true)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+      Actualizar
+    </button>
     <button class="add-btn" onclick="openAdd()">＋ Nueva tarea</button>
   </div>
 </header>
 
 <div class="app">
   <nav class="sidebar">
-    <div class="slabel">Empresa</div>
+    <div class="slbl">Empresa</div>
     <button class="nbtn active" onclick="setArea('all',this)"><div class="ndot" style="background:#1a1916"></div>Todas<span class="bn" id="b-all">0</span></button>
     <button class="nbtn" onclick="setArea('austar',this)"><div class="ndot" style="background:var(--austar)"></div>AuStar<span class="bn" id="b-austar">0</span></button>
     <button class="nbtn" onclick="setArea('agro',this)"><div class="ndot" style="background:var(--agro)"></div>AgroNetwork<span class="bn" id="b-agro">0</span></button>
@@ -213,8 +207,7 @@
     <button class="nbtn" onclick="setArea('filkhi',this)"><div class="ndot" style="background:var(--filkhi)"></div>FILKHI LLC<span class="bn" id="b-filkhi">0</span></button>
     <button class="nbtn" onclick="setArea('koru',this)"><div class="ndot" style="background:var(--koru)"></div>KORU SA<span class="bn" id="b-koru">0</span></button>
     <button class="nbtn" onclick="setArea('admin',this)"><div class="ndot" style="background:var(--admin)"></div>Admin & Gobernanza<span class="bn" id="b-admin">0</span></button>
-
-    <div class="slabel">Prioridad</div>
+    <div class="slbl">Prioridad</div>
     <button class="nbtn" onclick="setPrio('all',this)">Todas</button>
     <button class="nbtn" onclick="setPrio('Q1',this)">🔴 Q1 — Alta</button>
     <button class="nbtn" onclick="setPrio('Q2',this)">🟡 Q2 — Media</button>
@@ -222,12 +215,26 @@
   </nav>
 
   <main class="main">
+
+    <!-- BANNER DE CONFIGURACIÓN -->
+    <div class="setup-banner" id="setup-banner">
+      <div class="setup-icon">⚙️</div>
+      <div class="setup-txt">
+        <strong>Configuración pendiente:</strong> Para que el dashboard lea y guarde datos en Google Sheets, necesitas configurar el Apps Script.<br>
+        1. Abre el <a href="https://docs.google.com/spreadsheets/d/1fFcKjSNJCc7reOOUSYeY7YIXtd9MOSejpchtjkB52oU" target="_blank">Google Sheet de Tareas 2026</a> → <strong>Extensiones → Apps Script</strong><br>
+        2. Pega el código del archivo <code>appsscript.js</code> y guarda<br>
+        3. Haz clic en <strong>Implementar → Nueva implementación → Aplicación web</strong> → Ejecutar como: <strong>Yo</strong> → Acceso: <strong>Cualquier usuario</strong><br>
+        4. Copia la URL generada y pégala en la variable <code>APPS_SCRIPT_URL</code> de este archivo<br>
+        Mientras tanto, el dashboard funciona con datos locales.
+      </div>
+    </div>
+
     <div class="kpis">
-      <div class="kpi"><div class="klabel">Total Tareas</div><div class="kval" id="k-tot">0</div><div class="ksub">todas las empresas</div></div>
-      <div class="kpi"><div class="klabel">Completadas</div><div class="kval" id="k-don">0</div><div class="ksub" id="k-pct">0%</div><div class="kbar"><div class="kbar-f" id="k-bar" style="width:0%"></div></div></div>
-      <div class="kpi"><div class="klabel">En Proceso</div><div class="kval" id="k-pro">0</div><div class="ksub">activas</div></div>
-      <div class="kpi"><div class="klabel">Retrasadas</div><div class="kval" id="k-del" style="color:var(--delay-c)">0</div><div class="ksub">requieren acción</div></div>
-      <div class="kpi"><div class="klabel">En Espera</div><div class="kval" id="k-wai" style="color:var(--wait-c)">0</div><div class="ksub">pendientes</div></div>
+      <div class="kpi"><div class="klbl">Total Tareas</div><div class="kval" id="k-tot">0</div><div class="ksub">todas las empresas</div></div>
+      <div class="kpi"><div class="klbl">Completadas</div><div class="kval" id="k-don">0</div><div class="ksub" id="k-pct">0%</div><div class="kbar"><div class="kbar-f" id="k-bar" style="width:0%"></div></div></div>
+      <div class="kpi"><div class="klbl">En Proceso</div><div class="kval" id="k-pro">0</div><div class="ksub">activas</div></div>
+      <div class="kpi"><div class="klbl">Retrasadas</div><div class="kval" id="k-del" style="color:var(--delay-c)">0</div><div class="ksub">requieren acción</div></div>
+      <div class="kpi"><div class="klbl">En Espera</div><div class="kval" id="k-wai" style="color:var(--wait-c)">0</div><div class="ksub">pendientes</div></div>
     </div>
 
     <div class="toolbar">
@@ -286,101 +293,32 @@
     <div class="mfoot">
       <button class="btn bdel" id="bdel" onclick="delT()" style="display:none">🗑 Eliminar</button>
       <button class="btn bsec" onclick="closeMod()">Cancelar</button>
-      <button class="btn bpri" onclick="saveT()">Guardar</button>
+      <button class="btn bpri" id="save-btn" onclick="saveT()">Guardar en Sheets</button>
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════
-//  DATA  ·  Actualizado desde enero 2026
-// ══════════════════════════════════════════════════════
-let tasks = [
-  // ── AUSTAR ──────────────────────────────────────────
-  { id:1,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Socio Comercial Norte Israel — cierre distribución Q1',          prio:'Q1', own:'Yaneth / accountability', st:'prog',  ini:'2026-01-05', end:'2026-03-31', not:'' },
-  { id:2,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Socio Comercial Centro (Avoberries) — renovación contrato',       prio:'Q1', own:'ACL.',                   st:'plan',  ini:'2026-01-10', end:'2026-04-30', not:'' },
-  { id:3,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Socio Comercial Sureste (Odiseo) — activación mercado',           prio:'Q2', own:'ACL.',                   st:'wait',  ini:'2026-02-01', end:'2026-05-31', not:'' },
-  { id:4,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Clientes Actuales — base de datos actualizada 2026',             prio:'Q1', own:'ACL.',                   st:'prog',  ini:'2026-01-08', end:'2026-03-20', not:'' },
-  { id:5,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Prospectos — pipeline Q1 y Q2',                                  prio:'Q3', own:'ACL.',                   st:'plan',  ini:'2026-01-15', end:'2026-06-30', not:'' },
-  { id:6,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Distribuidores — onboarding nuevos distribuidores LATAM',        prio:'Q1', own:'ACL.',                   st:'prog',  ini:'2026-02-01', end:'2026-04-15', not:'' },
-  { id:7,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Testimonios — recopilación casos de éxito 2025-2026',            prio:'Q1', own:'sac@austar.mx',           st:'wait',  ini:'2026-01-20', end:'2026-03-28', not:'' },
-  { id:8,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Fotos — sesión fotográfica producto y campo',                    prio:'Q1', own:'agroamigo.ne...',         st:'wait',  ini:'2026-02-10', end:'2026-04-01', not:'' },
-  { id:9,  area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Grow For Gold — campaña Q1 lanzamiento',                        prio:'Q1', own:'contraloria@itradeco',    st:'delay', ini:'2026-01-05', end:'2026-03-15', not:'Campaña iniciada en enero, pendiente material gráfico' },
-  { id:10, area:'austar',  grp:'AuStar Comercial Yaneth',         obj:'Reto Austar vs genéricos — contenido comparativo',              prio:'Q2', own:'Yaneth',                 st:'plan',  ini:'2026-03-01', end:'2026-05-30', not:'' },
-  { id:11, area:'austar',  grp:'AuStar Academia',                 obj:'Austar Academy — módulo 1 formación distribuidores',            prio:'Q1', own:'Hiram',                  st:'prog',  ini:'2026-01-15', end:'2026-04-30', not:'' },
-  { id:12, area:'austar',  grp:'AuStar Academia',                 obj:'Manual técnico paclobutrazol 2026',                             prio:'Q2', own:'contraloria@itradeco',    st:'plan',  ini:'2026-02-01', end:'2026-05-01', not:'' },
+// ══════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN — PEGA AQUÍ TU URL DEL APPS SCRIPT
+//  Ejemplo: https://script.google.com/macros/s/AKfy.../exec
+// ══════════════════════════════════════════════════════════════
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk6GU24KlmuxftmswIpA76YBhTowixPwOjkotgAlGCD85noj6tVRh4ge6tiSACnljbog/exec';
 
-  // ── AGRONETWORK ─────────────────────────────────────
-  { id:13, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Portada edición enero 2026',                                   prio:'Q1', own:'agroamigo.ne...',         st:'done',  ini:'2026-01-03', end:'2026-01-17', not:'Publicada el 17 enero' },
-  { id:14, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Editorial enero — Agricultura de precisión',                   prio:'Q2', own:'hibarra@itradeco',        st:'done',  ini:'2026-01-03', end:'2026-01-17', not:'' },
-  { id:15, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Portada edición febrero 2026',                                 prio:'Q1', own:'agroamigo.ne...',         st:'done',  ini:'2026-01-20', end:'2026-02-17', not:'' },
-  { id:16, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Artículo Sustentabilidad — agua en el agro',                   prio:'Q1', own:'',                       st:'done',  ini:'2026-01-20', end:'2026-02-10', not:'' },
-  { id:17, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Portada edición marzo 2026',                                   prio:'Q1', own:'agroamigo.ne...',         st:'prog',  ini:'2026-02-20', end:'2026-03-17', not:'' },
-  { id:18, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Artículo Transformación digital campo',                        prio:'Q2', own:'',                       st:'plan',  ini:'2026-02-15', end:'2026-03-20', not:'' },
-  { id:19, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Seguimiento presupuesto y redes sociales Q1',                  prio:'Q1', own:'agroamigo.ne...',         st:'delay', ini:'2026-01-05', end:'2026-03-15', not:'Pendiente cierre de pauta Q1' },
-  { id:20, area:'agro',    grp:'Agroamigo Story Teller Magazine',  obj:'Coordinación publicación día 17 — flujo mensual',              prio:'Q1', own:'agroamigo.ne...',         st:'prog',  ini:'2026-01-05', end:'2026-12-17', not:'Proceso recurrente mensual' },
-  { id:21, area:'agro',    grp:'AgroDisrupción Podcast',           obj:'Inventario episodios grabados 2025-2026',                      prio:'Q1', own:'agroamigo.ne...',         st:'plan',  ini:'2026-01-10', end:'2026-04-30', not:'' },
-  { id:22, area:'agro',    grp:'AgroDisrupción Podcast',           obj:'Grabación episodios Q1 2026 — 4 episodios',                    prio:'Q2', own:'agroamigo.ne...',         st:'prog',  ini:'2026-01-15', end:'2026-03-31', not:'' },
-  { id:23, area:'agro',    grp:'AgroInteligencia 360°',            obj:'Lanzamiento AgroInteligencia 360° — identidad y posicionamiento', prio:'Q1', own:'Hiram',               st:'prog',  ini:'2026-01-10', end:'2026-06-30', not:'Proyecto estratégico clave 2026' },
+// Contraseña de acceso
+const ACCESS_KEY = 'itradeco2026';
 
-  // ── BACK2BACK ────────────────────────────────────────
-  { id:24, area:'b2b',     grp:'Back2Back Finance',               obj:'Misión, Visión y Objetivos estratégicos 2026',                  prio:'Q1', own:'contraloria@itradeco',    st:'prog',  ini:'2026-01-05', end:'2026-02-28', not:'' },
-  { id:25, area:'b2b',     grp:'Back2Back Finance',               obj:'Fuente de financiamiento — estructuras Q1',                    prio:'Q1', own:'hibarra@itradeco',        st:'plan',  ini:'2026-01-15', end:'2026-04-30', not:'' },
-  { id:26, area:'b2b',     grp:'Back2Back Finance',               obj:'Vehículo de inversión LATAM — constitución',                   prio:'Q1', own:'Hiram',                  st:'wait',  ini:'2026-02-01', end:'2026-06-30', not:'' },
-  { id:27, area:'b2b',     grp:'Back2Back Finance',               obj:'Puerto Rico — análisis fiscal y relocalización',               prio:'Q2', own:'Hiram',                  st:'plan',  ini:'2026-03-01', end:'2026-09-30', not:'Exploración acto 60/22' },
-
-  // ── HIL INMOBILIARIA ─────────────────────────────────
-  { id:28, area:'hil',     grp:'Inmuebles',                       obj:'Casa Copal — cierre proceso legal y fiscal',                   prio:'Q1', own:'iTrade Co / dsolis',      st:'prog',  ini:'2026-01-07', end:'2026-04-07', not:'' },
-  { id:29, area:'hil',     grp:'Inmuebles',                       obj:'Casa Colibri — revisión valuación y estrategia',              prio:'Q1', own:'contraloria@itradeco',    st:'plan',  ini:'2026-01-10', end:'2026-06-30', not:'' },
-  { id:30, area:'hil',     grp:'Inmuebles',                       obj:'Tulum — seguimiento escrituración',                           prio:'Q1', own:'dsolis@legal',            st:'plan',  ini:'2026-02-01', end:'2026-05-31', not:'' },
-  { id:31, area:'hil',     grp:'Inmuebles',                       obj:'Silao — finalizado, archivo y cierre contable',               prio:'Q1', own:'dsolis@legal',            st:'done',  ini:'2025-01-01', end:'2026-01-31', not:'Cerrado satisfactoriamente' },
-  { id:32, area:'hil',     grp:'Inmuebles',                       obj:'Altus Corporativo — gestión y mantenimiento',                 prio:'Q1', own:'dsolis@legal',            st:'plan',  ini:'2026-01-15', end:'2026-12-31', not:'' },
-  { id:33, area:'hil',     grp:'Inmuebles',                       obj:'Florentina Residencial — inicio desarrollo',                  prio:'Q1', own:'Hiram / Alejandra',       st:'prog',  ini:'2026-02-01', end:'2026-12-31', not:'Proyecto residencial principal 2026' },
-  { id:34, area:'hil',     grp:'Inmuebles',                       obj:'Casa Origen El Mezquite — plan de desarrollo familiar',       prio:'Q2', own:'Hiram',                  st:'plan',  ini:'2026-03-01', end:'2026-12-31', not:'Proyecto de legado familiar' },
-  { id:35, area:'hil',     grp:'Vehículos',                       obj:'Jeep — gestión seguro y mantenimiento 2026',                  prio:'Q2', own:'hibarra@itradeco',        st:'prog',  ini:'2026-01-05', end:'2026-12-31', not:'' },
-  { id:36, area:'hil',     grp:'Vehículos',                       obj:'Canyon — revisión contrato y uso corporativo',                prio:'Q1', own:'hibarra@itradeco',        st:'plan',  ini:'2026-01-10', end:'2026-03-31', not:'' },
-  { id:37, area:'hil',     grp:'Vehículos',                       obj:'Subaru — definición uso y asignación',                        prio:'Q2', own:'contraloria@itradeco',    st:'plan',  ini:'2026-01-15', end:'2026-04-30', not:'' },
-  { id:38, area:'hil',     grp:'Vehículos',                       obj:'Kwid — trámite y documentación',                              prio:'Q1', own:'contraloria@itradeco',    st:'plan',  ini:'2026-01-10', end:'2026-03-31', not:'' },
-
-  // ── FILKHI LLC ───────────────────────────────────────
-  { id:39, area:'filkhi',  grp:'FILKHI Website',                  obj:'Contenido y texto "Quiénes somos" — versión EN/ES',            prio:'Q1', own:'Hiram',                  st:'delay', ini:'2026-01-10', end:'2026-02-28', not:'Pendiente desde oct 2025' },
-  { id:40, area:'filkhi',  grp:'FILKHI Website',                  obj:'Diseño página web DI360 — fase 1',                            prio:'Q1', own:'',                       st:'delay', ini:'2026-01-10', end:'2026-03-15', not:'' },
-  { id:41, area:'filkhi',  grp:'FILKHI Website',                  obj:'Objetivo y botón de acción — fase 1',                         prio:'Q2', own:'',                       st:'plan',  ini:'2026-03-01', end:'2026-04-30', not:'' },
-  { id:42, area:'filkhi',  grp:'FILKHI Website',                  obj:'Vínculo directo WhatsApp — integración',                      prio:'Q2', own:'',                       st:'plan',  ini:'2026-03-01', end:'2026-04-15', not:'' },
-  { id:43, area:'filkhi',  grp:'Di360',                           obj:'Diseño empaque libros Di360',                                 prio:'Q2', own:'',                       st:'plan',  ini:'2026-02-01', end:'2026-05-31', not:'' },
-  { id:44, area:'filkhi',  grp:'Di360',                           obj:'Programa Di360 Bienvenida — grabación y edición',             prio:'Q1', own:'',                       st:'delay', ini:'2026-01-05', end:'2026-03-01', not:'Pendiente desde nov 2025' },
-  { id:45, area:'filkhi',  grp:'Di360',                           obj:'Programa Di360 Contenido — módulos 1-4',                      prio:'Q1', own:'',                       st:'plan',  ini:'2026-02-01', end:'2026-06-30', not:'' },
-  { id:46, area:'filkhi',  grp:'Di360',                           obj:'Grabar ROI en audio — Amazon Audible',                        prio:'Q2', own:'hibarra@itradeco',        st:'delay', ini:'2026-01-10', end:'2026-03-01', not:'Retrasado desde Q4-2025' },
-  { id:47, area:'filkhi',  grp:'Di360',                           obj:'Definir precio y modelo de venta Di360',                      prio:'Q1', own:'Hiram',                  st:'prog',  ini:'2026-02-01', end:'2026-04-30', not:'' },
-
-  // ── KORU SA ──────────────────────────────────────────
-  { id:48, area:'koru',    grp:'KORU Soul Business Advisory',     obj:'Contenido y texto "Quiénes somos" KORU — EN/ES',               prio:'Q1', own:'',                       st:'delay', ini:'2026-01-10', end:'2026-02-28', not:'Pendiente desde oct 2025' },
-  { id:49, area:'koru',    grp:'KORU Soul Business Advisory',     obj:'Diseño página web KORU — identidad y lanzamiento',             prio:'Q1', own:'',                       st:'delay', ini:'2026-01-10', end:'2026-03-15', not:'' },
-  { id:50, area:'koru',    grp:'KORU Soul Business Advisory',     obj:'Programa mentoring Q1 2026 — apertura inscripciones',          prio:'Q1', own:'Hiram',                  st:'prog',  ini:'2026-01-15', end:'2026-03-31', not:'' },
-  { id:51, area:'koru',    grp:'KORU Soul Business Advisory',     obj:'Objetivo y botón de acción web — fase 1',                     prio:'Q2', own:'',                       st:'plan',  ini:'2026-03-01', end:'2026-04-30', not:'' },
-  { id:52, area:'koru',    grp:'Di360',                           obj:'Programa Di360 Bienvenida — versión KORU',                    prio:'Q1', own:'',                       st:'delay', ini:'2026-01-05', end:'2026-03-01', not:'' },
-  { id:53, area:'koru',    grp:'Di360',                           obj:'Programa Di360 Contenido — módulos KORU',                     prio:'Q1', own:'',                       st:'plan',  ini:'2026-02-01', end:'2026-06-30', not:'' },
-  { id:54, area:'koru',    grp:'Di360',                           obj:'Grabar ROI en audio — versión KORU',                          prio:'Q2', own:'hibarra@itradeco',        st:'delay', ini:'2026-01-10', end:'2026-03-01', not:'' },
-
-  // ── ADMIN & GOBERNANZA ───────────────────────────────
-  { id:55, area:'admin',   grp:'Gobernanza iTradeCo',             obj:'Estructura societaria 2026 — revisión y ajustes',              prio:'Q1', own:'Hiram',                  st:'prog',  ini:'2026-01-05', end:'2026-03-31', not:'' },
-  { id:56, area:'admin',   grp:'Gobernanza iTradeCo',             obj:'OKRs Q1 2026 — definición y comunicación al equipo',           prio:'Q1', own:'Hiram',                  st:'done',  ini:'2026-01-02', end:'2026-01-15', not:'Completado en kick-off enero' },
-  { id:57, area:'admin',   grp:'Gobernanza iTradeCo',             obj:'Revisión dashboard Tareas 2026 — actualización mensual',       prio:'Q2', own:'Hiram / Kath',           st:'prog',  ini:'2026-01-01', end:'2026-12-31', not:'Proceso mensual de actualización' },
-  { id:58, area:'admin',   grp:'Gobernanza iTradeCo',             obj:'FILKHI Panama — constitución y estructura consulting',         prio:'Q1', own:'Hiram',                  st:'plan',  ini:'2026-03-01', end:'2026-06-30', not:'' },
-];
-
-let nid = 59;
-let aF='all', sF='all', pF='all', q='', eId=null;
-
+// ══════════════════════════════════════════════════════════════
 const AM = {
-  austar:  {lbl:'AuStar',           col:'var(--austar)'},
-  agro:    {lbl:'AgroNetwork',      col:'var(--agro)'},
-  b2b:     {lbl:'Back2Back',        col:'var(--b2b)'},
-  hil:     {lbl:'HIL Inmobiliaria', col:'var(--hil)'},
-  filkhi:  {lbl:'FILKHI LLC',       col:'var(--filkhi)'},
-  koru:    {lbl:'KORU SA',          col:'var(--koru)'},
-  admin:   {lbl:'Admin',            col:'var(--admin)'},
+  austar: {lbl:'AuStar',col:'var(--austar)'},
+  agro:   {lbl:'AgroNetwork',col:'var(--agro)'},
+  b2b:    {lbl:'Back2Back',col:'var(--b2b)'},
+  hil:    {lbl:'HIL Inmobiliaria',col:'var(--hil)'},
+  filkhi: {lbl:'FILKHI LLC',col:'var(--filkhi)'},
+  koru:   {lbl:'KORU SA',col:'var(--koru)'},
+  admin:  {lbl:'Admin',col:'var(--admin)'},
 };
 const SM = {
   plan:  ['splan','📋 Según lo planificado'],
@@ -390,40 +328,110 @@ const SM = {
   wait:  ['swait','⏸ En espera'],
 };
 
-function fmt(d){if(!d)return'—';const[y,m,day]=d.split('-');return`${day}/${m}/${String(y).slice(-2)}`;}
-function dcls(d,s){
-  if(!d||s==='done')return'dt';
-  const diff=Math.ceil((new Date(d)-new Date())/86400000);
-  return diff<0?'dt ov':diff<=4?'dt sn':'dt';
+let tasks = [];
+let nid = 1000;
+let aF='all', sF='all', pF='all', q='', eId=null, eTask=null;
+let usingSheets = false;
+
+// ─── LOCK ────────────────────────────────────────────────────
+function unlock(){
+  const val = document.getElementById('pwd').value.trim();
+  if(val === ACCESS_KEY){
+    document.getElementById('lock').classList.add('off');
+    sessionStorage.setItem('itc_auth','1');
+    loadTasks();
+  } else {
+    const e = document.getElementById('lerr');
+    e.textContent = '⚠ Contraseña incorrecta.';
+    document.getElementById('pwd').value = '';
+    document.getElementById('pwd').focus();
+    setTimeout(()=>e.textContent='', 3000);
+  }
 }
+
+// ─── CARGAR TAREAS ───────────────────────────────────────────
+async function loadTasks(manual = false) {
+  if(manual) showToast('🔄 Actualizando desde Google Sheets...');
+  
+  const syncBtn = document.getElementById('sync-btn');
+  syncBtn.classList.add('spin');
+
+  if(APPS_SCRIPT_URL) {
+    try {
+      document.getElementById('load-txt').textContent = 'Cargando datos desde Google Sheets...';
+      if(!manual) document.getElementById('loading').classList.remove('off');
+      
+      const res = await fetch(APPS_SCRIPT_URL + '?action=getTasks', {mode:'cors'});
+      const data = await res.json();
+      
+      if(data.tasks && Array.isArray(data.tasks)) {
+        tasks = data.tasks;
+        usingSheets = true;
+        document.getElementById('setup-banner').classList.add('off');
+        if(manual) showToast('✅ Datos actualizados desde Google Sheets');
+      }
+    } catch(err) {
+      console.error('Error cargando sheets:', err);
+      if(manual) showToast('⚠ Error al conectar. Usando datos locales.');
+      if(!tasks.length) loadFallbackData();
+    }
+  } else {
+    loadFallbackData();
+  }
+
+  document.getElementById('loading').classList.add('off');
+  syncBtn.classList.remove('spin');
+  render();
+}
+
+// ─── GUARDAR EN SHEETS ───────────────────────────────────────
+async function saveToSheets(action, data) {
+  if(!APPS_SCRIPT_URL) return null;
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({action, ...data})
+    });
+    return await res.json();
+  } catch(err) {
+    console.error('Error guardando:', err);
+    return null;
+  }
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────
+function fmt(d){if(!d)return'—';const[y,m,day]=d.split('-');return`${day}/${m}/${String(y).slice(-2)}`;}
+function dcls(d,s){if(!d||s==='done')return'dt';const diff=Math.ceil((new Date(d)-new Date())/86400000);return diff<0?'dt ov':diff<=4?'dt sn':'dt';}
 function coTag(a){const m=AM[a];if(!m)return'';return`<span class="cotag" style="background:${m.col}18;color:${m.col}">${m.lbl}</span>`;}
 function pB(p){if(!p)return'<span style="color:var(--muted);font-size:12px">—</span>';return`<span class="prio p${p}">${p}</span>`;}
 function sB(s){const[c,l]=SM[s]||['splan',s];return`<span class="st ${c}"><span class="sdot"></span>${l}</span>`;}
 function owC(o){if(!o)return'<span style="color:var(--muted);font-size:12px">—</span>';const sh=o.length>16?o.slice(0,16)+'…':o;const ini=o.split(/[@.\s]/).filter(Boolean).map(w=>w[0]?.toUpperCase()||'').join('').slice(0,2);return`<div class="ow"><div class="av">${ini}</div>${sh}</div>`;}
 
+// ─── RENDER ──────────────────────────────────────────────────
 function render(){
   const fil=tasks.filter(t=>{
     if(aF!=='all'&&t.area!==aF)return false;
     if(sF!=='all'&&t.st!==sF)return false;
     if(pF!=='all'&&t.prio!==pF)return false;
-    if(q&&!t.obj.toLowerCase().includes(q.toLowerCase())&&!t.grp.toLowerCase().includes(q.toLowerCase()))return false;
+    if(q&&!t.obj.toLowerCase().includes(q.toLowerCase())&&!(t.grp||'').toLowerCase().includes(q.toLowerCase()))return false;
     return true;
   });
   const tbody=document.getElementById('tbody');
   tbody.innerHTML='';
   const groups={};
-  fil.forEach(t=>{const k=t.area+'|||'+t.grp;if(!groups[k])groups[k]=[];groups[k].push(t);});
+  fil.forEach(t=>{const k=t.area+'|||'+(t.grp||t.area);if(!groups[k])groups[k]=[];groups[k].push(t);});
   let cnt=0;
   Object.entries(groups).forEach(([k,items])=>{
     const[area,grp]=k.split('|||');
     const col=AM[area]?.col||'#555';
     const gr=document.createElement('tr');gr.className='grow';
-    gr.innerHTML=`<td colspan="7"><span class="glabel" style="color:${col}">${grp}</span></td>`;
+    gr.innerHTML=`<td colspan="7"><span class="glbl" style="color:${col}">${grp}</span></td>`;
     tbody.appendChild(gr);
     items.forEach(t=>{
       cnt++;
       const tr=document.createElement('tr');
-      tr.onclick=()=>openEdit(t.id);
+      tr.onclick=()=>openEdit(t);
       tr.innerHTML=`<td><span class="tname">${t.obj}</span></td><td>${coTag(t.area)}</td><td>${pB(t.prio)}</td><td>${owC(t.own)}</td><td>${sB(t.st)}</td><td><span class="dt">${fmt(t.ini)}</span></td><td><span class="${dcls(t.end,t.st)}">${fmt(t.end)}</span></td>`;
       tbody.appendChild(tr);
     });
@@ -433,8 +441,11 @@ function render(){
 }
 
 function kpis(){
-  const t=tasks;const don=t.filter(x=>x.st==='done').length;const pro=t.filter(x=>x.st==='prog').length;
-  const del=t.filter(x=>x.st==='delay').length;const wai=t.filter(x=>x.st==='wait').length;
+  const t=tasks;
+  const don=t.filter(x=>x.st==='done').length;
+  const pro=t.filter(x=>x.st==='prog').length;
+  const del=t.filter(x=>x.st==='delay').length;
+  const wai=t.filter(x=>x.st==='wait').length;
   const pct=t.length?Math.round(don/t.length*100):0;
   document.getElementById('k-tot').textContent=t.length;
   document.getElementById('k-don').textContent=don;
@@ -452,49 +463,161 @@ function badges(){
   });
 }
 
+// ─── FILTROS ─────────────────────────────────────────────────
 function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'HIL Inmobiliaria',filkhi:'FILKHI LLC',koru:'KORU SA',admin:'Admin & Gobernanza'};document.getElementById('vtitle').textContent=n[a]||a;render();}
 function setSt(s,btn){sF=s;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
-function setPrio(p,btn){pF=p;render();}
+function setPrio(p){pF=p;render();}
 function doQ(v){q=v;render();}
 
-function openAdd(){eId=null;document.getElementById('mtitle').textContent='Nueva tarea';['m-obj','m-grp','m-own','m-not'].forEach(id=>document.getElementById(id).value='');document.getElementById('m-area').value='austar';document.getElementById('m-prio').value='Q1';document.getElementById('m-st').value='plan';document.getElementById('m-ini').value='';document.getElementById('m-end').value='';document.getElementById('bdel').style.display='none';document.getElementById('ovl').classList.add('open');}
-function openEdit(id){const t=tasks.find(x=>x.id===id);if(!t)return;eId=id;document.getElementById('mtitle').textContent=t.obj;document.getElementById('m-obj').value=t.obj;document.getElementById('m-area').value=t.area;document.getElementById('m-grp').value=t.grp;document.getElementById('m-prio').value=t.prio||'Q1';document.getElementById('m-own').value=t.own;document.getElementById('m-st').value=t.st;document.getElementById('m-ini').value=t.ini;document.getElementById('m-end').value=t.end;document.getElementById('m-not').value=t.not;document.getElementById('bdel').style.display='inline-flex';document.getElementById('ovl').classList.add('open');}
+// ─── MODAL ───────────────────────────────────────────────────
+function openAdd(){
+  eId=null;eTask=null;
+  document.getElementById('mtitle').textContent='Nueva tarea';
+  ['m-obj','m-grp','m-own','m-not'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('m-area').value='austar';
+  document.getElementById('m-prio').value='Q1';
+  document.getElementById('m-st').value='plan';
+  document.getElementById('m-ini').value='';
+  document.getElementById('m-end').value='';
+  document.getElementById('bdel').style.display='none';
+  document.getElementById('save-btn').textContent = usingSheets ? 'Guardar en Sheets ✓' : 'Guardar';
+  document.getElementById('ovl').classList.add('open');
+}
+
+function openEdit(t){
+  eId=t.id;eTask=t;
+  document.getElementById('mtitle').textContent=t.obj;
+  document.getElementById('m-obj').value=t.obj;
+  document.getElementById('m-area').value=t.area;
+  document.getElementById('m-grp').value=t.grp||'';
+  document.getElementById('m-prio').value=t.prio||'Q1';
+  document.getElementById('m-own').value=t.own||'';
+  document.getElementById('m-st').value=t.st;
+  document.getElementById('m-ini').value=t.ini||'';
+  document.getElementById('m-end').value=t.end||'';
+  document.getElementById('m-not').value=t.not||'';
+  document.getElementById('bdel').style.display='inline-flex';
+  document.getElementById('save-btn').textContent = usingSheets ? 'Guardar en Sheets ✓' : 'Guardar';
+  document.getElementById('ovl').classList.add('open');
+}
+
 function closeMod(e){if(e&&e.target!==document.getElementById('ovl'))return;document.getElementById('ovl').classList.remove('open');}
-function saveT(){const obj=document.getElementById('m-obj').value.trim();if(!obj)return alert('El objetivo no puede estar vacío.');const d={obj,area:document.getElementById('m-area').value,grp:document.getElementById('m-grp').value.trim()||document.getElementById('m-area').options[document.getElementById('m-area').selectedIndex].text,prio:document.getElementById('m-prio').value,own:document.getElementById('m-own').value.trim(),st:document.getElementById('m-st').value,ini:document.getElementById('m-ini').value,end:document.getElementById('m-end').value,not:document.getElementById('m-not').value.trim()};if(eId){const i=tasks.findIndex(t=>t.id===eId);tasks[i]={...tasks[i],...d};showToast('✅ Tarea actualizada');}else{tasks.push({id:nid++,...d});showToast('✅ Tarea agregada');}document.getElementById('ovl').classList.remove('open');render();}
-function delT(){if(!eId||!confirm('¿Eliminar esta tarea?'))return;tasks=tasks.filter(t=>t.id!==eId);document.getElementById('ovl').classList.remove('open');showToast('🗑 Tarea eliminada');render();}
-function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400);}
 
-// ── ACCESO CON CONTRASEÑA ────────────────
-// Para cambiar la clave, edita solo el valor de ACCESS_KEY
-const ACCESS_KEY = 'itradeco2026';
+async function saveT(){
+  const obj=document.getElementById('m-obj').value.trim();
+  if(!obj)return alert('El objetivo no puede estar vacío.');
+  
+  const saveBtn = document.getElementById('save-btn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Guardando...';
 
-function unlock(){
-  const val = document.getElementById('pwd-input').value.trim();
-  if(val === ACCESS_KEY){
-    document.getElementById('lock-screen').style.display = 'none';
-    sessionStorage.setItem('itc_auth','1');
+  const d={
+    obj,
+    area:document.getElementById('m-area').value,
+    grp:document.getElementById('m-grp').value.trim(),
+    prio:document.getElementById('m-prio').value,
+    own:document.getElementById('m-own').value.trim(),
+    st:document.getElementById('m-st').value,
+    ini:document.getElementById('m-ini').value,
+    end:document.getElementById('m-end').value,
+    not:document.getElementById('m-not').value.trim(),
+  };
+
+  if(eId && eTask) {
+    // Actualizar
+    const idx=tasks.findIndex(t=>t.id===eId);
+    if(idx>-1){
+      tasks[idx]={...tasks[idx],...d};
+      // Guardar en Sheets si está configurado
+      if(usingSheets && eTask.rowIndex) {
+        const res = await saveToSheets('updateTask', {...d, rowIndex: eTask.rowIndex});
+        if(res?.success) showToast('✅ Guardado en Google Sheets');
+        else showToast('⚠ Guardado localmente (error en Sheets)');
+      } else {
+        showToast('✅ Tarea actualizada');
+      }
+    }
   } else {
-    const err = document.getElementById('lock-error');
-    err.textContent = '⚠ Contraseña incorrecta, inténtalo de nuevo.';
-    document.getElementById('pwd-input').value = '';
-    document.getElementById('pwd-input').focus();
-    setTimeout(()=>{ err.textContent=''; }, 3000);
+    // Nueva tarea
+    const newTask = {id:nid++, rowIndex:null, ...d};
+    tasks.push(newTask);
+    if(usingSheets) {
+      const res = await saveToSheets('addTask', d);
+      if(res?.success) {
+        newTask.rowIndex = res.rowIndex;
+        showToast('✅ Nueva tarea guardada en Google Sheets');
+      } else {
+        showToast('⚠ Guardado localmente (error en Sheets)');
+      }
+    } else {
+      showToast('✅ Tarea agregada');
+    }
   }
+
+  saveBtn.disabled = false;
+  saveBtn.textContent = usingSheets ? 'Guardar en Sheets ✓' : 'Guardar';
+  document.getElementById('ovl').classList.remove('open');
+  render();
 }
 
-// Si ya está autenticado en esta sesión, saltar pantalla
-if(sessionStorage.getItem('itc_auth')==='1'){
-  document.getElementById('lock-screen').style.display='none';
-} else {
-  setTimeout(()=>document.getElementById('pwd-input').focus(), 200);
+async function delT(){
+  if(!eId||!confirm('¿Eliminar esta tarea?'))return;
+  const t = tasks.find(x=>x.id===eId);
+  tasks=tasks.filter(t=>t.id!==eId);
+  if(usingSheets && t?.rowIndex) {
+    const res = await saveToSheets('deleteTask', {area: t.area, rowIndex: t.rowIndex});
+    if(res?.success) showToast('🗑 Eliminado de Google Sheets');
+    else showToast('🗑 Eliminado localmente');
+  } else {
+    showToast('🗑 Tarea eliminada');
+  }
+  document.getElementById('ovl').classList.remove('open');
+  render();
 }
 
+function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+
+// ─── DATOS DE RESPALDO ───────────────────────────────────────
+function loadFallbackData(){
+  tasks = [
+    {id:1,area:'austar',grp:'AuStar Comercial Yaneth',obj:'Socio Comercial Norte Israel — cierre distribución Q1',prio:'Q1',own:'Yaneth / accountability',st:'prog',ini:'2026-01-05',end:'2026-03-31',not:''},
+    {id:2,area:'austar',grp:'AuStar Comercial Yaneth',obj:'Socio Comercial Centro (Avoberries) — renovación contrato',prio:'Q1',own:'ACL.',st:'plan',ini:'2026-01-10',end:'2026-04-30',not:''},
+    {id:3,area:'austar',grp:'AuStar Comercial Yaneth',obj:'Socio Comercial Sureste (Odiseo) — activación mercado',prio:'Q2',own:'ACL.',st:'wait',ini:'2026-02-01',end:'2026-05-31',not:''},
+    {id:4,area:'austar',grp:'AuStar Comercial Yaneth',obj:'Clientes Actuales — base de datos actualizada 2026',prio:'Q1',own:'ACL.',st:'prog',ini:'2026-01-08',end:'2026-03-20',not:''},
+    {id:5,area:'austar',grp:'AuStar Comercial Yaneth',obj:'Grow For Gold — campaña Q1 lanzamiento',prio:'Q1',own:'contraloria@itradeco',st:'delay',ini:'2026-01-05',end:'2026-03-15',not:''},
+    {id:6,area:'austar',grp:'AuStar Academia',obj:'Austar Academy — módulo 1 formación distribuidores',prio:'Q1',own:'Hiram',st:'prog',ini:'2026-01-15',end:'2026-04-30',not:''},
+    {id:7,area:'agro',grp:'Agroamigo Story Teller Magazine',obj:'Portada edición enero 2026',prio:'Q1',own:'agroamigo.ne...',st:'done',ini:'2026-01-03',end:'2026-01-17',not:'Publicada el 17 enero'},
+    {id:8,area:'agro',grp:'Agroamigo Story Teller Magazine',obj:'Portada edición marzo 2026',prio:'Q1',own:'agroamigo.ne...',st:'prog',ini:'2026-02-20',end:'2026-03-17',not:''},
+    {id:9,area:'agro',grp:'Agroamigo Story Teller Magazine',obj:'Seguimiento presupuesto y redes sociales Q1',prio:'Q1',own:'agroamigo.ne...',st:'delay',ini:'2026-01-05',end:'2026-03-15',not:''},
+    {id:10,area:'agro',grp:'AgroInteligencia 360°',obj:'Lanzamiento AgroInteligencia 360° — identidad y posicionamiento',prio:'Q1',own:'Hiram',st:'prog',ini:'2026-01-10',end:'2026-06-30',not:''},
+    {id:11,area:'b2b',grp:'Back2Back Finance',obj:'Misión, Visión y Objetivos estratégicos 2026',prio:'Q1',own:'contraloria@itradeco',st:'prog',ini:'2026-01-05',end:'2026-02-28',not:''},
+    {id:12,area:'b2b',grp:'Back2Back Finance',obj:'Puerto Rico — análisis fiscal y relocalización',prio:'Q2',own:'Hiram',st:'plan',ini:'2026-03-01',end:'2026-09-30',not:''},
+    {id:13,area:'hil',grp:'Inmuebles',obj:'Casa Copal — cierre proceso legal y fiscal',prio:'Q1',own:'iTrade Co / dsolis',st:'prog',ini:'2026-01-07',end:'2026-04-07',not:''},
+    {id:14,area:'hil',grp:'Inmuebles',obj:'Florentina Residencial — inicio desarrollo',prio:'Q1',own:'Hiram / Alejandra',st:'prog',ini:'2026-02-01',end:'2026-12-31',not:''},
+    {id:15,area:'hil',grp:'Vehículos',obj:'Jeep — gestión seguro y mantenimiento 2026',prio:'Q2',own:'hibarra@itradeco',st:'prog',ini:'2026-01-05',end:'2026-12-31',not:''},
+    {id:16,area:'filkhi',grp:'FILKHI Website',obj:'Contenido y texto "Quiénes somos" — versión EN/ES',prio:'Q1',own:'Hiram',st:'delay',ini:'2026-01-10',end:'2026-02-28',not:''},
+    {id:17,area:'filkhi',grp:'Di360',obj:'Programa Di360 Bienvenida — grabación y edición',prio:'Q1',own:'',st:'delay',ini:'2026-01-05',end:'2026-03-01',not:''},
+    {id:18,area:'koru',grp:'KORU Soul Business Advisory',obj:'Diseño página web KORU — identidad y lanzamiento',prio:'Q1',own:'',st:'delay',ini:'2026-01-10',end:'2026-03-15',not:''},
+    {id:19,area:'koru',grp:'KORU Soul Business Advisory',obj:'Programa mentoring Q1 2026 — apertura inscripciones',prio:'Q1',own:'Hiram',st:'prog',ini:'2026-01-15',end:'2026-03-31',not:''},
+    {id:20,area:'admin',grp:'Gobernanza iTradeCo',obj:'OKRs Q1 2026 — definición y comunicación al equipo',prio:'Q1',own:'Hiram',st:'done',ini:'2026-01-02',end:'2026-01-15',not:''},
+    {id:21,area:'admin',grp:'Gobernanza iTradeCo',obj:'FILKHI Panama — constitución y estructura consulting',prio:'Q1',own:'Hiram',st:'plan',ini:'2026-03-01',end:'2026-06-30',not:''},
+  ];
+}
+
+// ─── INIT ────────────────────────────────────────────────────
 (function init(){
   const n=new Date();
   const D=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   document.getElementById('dpill').textContent=`${D[n.getDay()]} ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()}`;
-  render();
+
+  if(sessionStorage.getItem('itc_auth')==='1'){
+    document.getElementById('lock').classList.add('off');
+    loadTasks();
+  } else {
+    document.getElementById('loading').classList.add('off');
+    setTimeout(()=>document.getElementById('pwd').focus(), 200);
+  }
 })();
 </script>
 </body>
