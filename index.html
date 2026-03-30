@@ -480,7 +480,7 @@ function openAdd(){
   document.getElementById('m-ini').value='';
   document.getElementById('m-end').value='';
   document.getElementById('bdel').style.display='none';
-  document.getElementById('save-btn').textContent = usingSheets ? 'Guardar en Sheets ✓' : 'Guardar';
+  document.getElementById('save-btn').textContent = APPS_SCRIPT_URL ? 'Guardar en Sheets ✓' : 'Guardar';
   document.getElementById('ovl').classList.add('open');
 }
 
@@ -497,7 +497,7 @@ function openEdit(t){
   document.getElementById('m-end').value=t.end||'';
   document.getElementById('m-not').value=t.not||'';
   document.getElementById('bdel').style.display='inline-flex';
-  document.getElementById('save-btn').textContent = usingSheets ? 'Guardar en Sheets ✓' : 'Guardar';
+  document.getElementById('save-btn').textContent = APPS_SCRIPT_URL ? 'Guardar en Sheets ✓' : 'Guardar';
   document.getElementById('ovl').classList.add('open');
 }
 
@@ -528,29 +528,32 @@ async function saveT(){
     const idx=tasks.findIndex(t=>t.id===eId);
     if(idx>-1){
       tasks[idx]={...tasks[idx],...d};
-      // Guardar en Sheets si está configurado
-      if(usingSheets && eTask.rowIndex) {
+      // SIEMPRE intentar guardar en Sheets si hay URL y rowIndex
+      if(APPS_SCRIPT_URL && eTask.rowIndex) {
         const res = await saveToSheets('updateTask', {...d, rowIndex: eTask.rowIndex});
         if(res?.success) showToast('✅ Guardado en Google Sheets');
-        else showToast('⚠ Guardado localmente (error en Sheets)');
+        else { showToast('⚠ Error al guardar en Sheets'); console.error('Save failed:', res); }
+      } else if(!eTask.rowIndex) {
+        showToast('⚠ Sin rowIndex — no se puede guardar');
+        console.error('rowIndex missing:', eTask);
       } else {
-        showToast('✅ Tarea actualizada');
+        showToast('✅ Tarea actualizada (local)');
       }
     }
   } else {
     // Nueva tarea
     const newTask = {id:nid++, rowIndex:null, ...d};
     tasks.push(newTask);
-    if(usingSheets) {
+    if(APPS_SCRIPT_URL) {
       const res = await saveToSheets('addTask', d);
       if(res?.success) {
         newTask.rowIndex = res.rowIndex;
         showToast('✅ Nueva tarea guardada en Google Sheets');
       } else {
-        showToast('⚠ Guardado localmente (error en Sheets)');
+        showToast('⚠ Error al guardar en Sheets');
       }
     } else {
-      showToast('✅ Tarea agregada');
+      showToast('✅ Tarea agregada (local)');
     }
   }
 
@@ -564,7 +567,7 @@ async function delT(){
   if(!eId||!confirm('¿Eliminar esta tarea?'))return;
   const t = tasks.find(x=>x.id===eId);
   tasks=tasks.filter(t=>t.id!==eId);
-  if(usingSheets && t?.rowIndex) {
+  if(APPS_SCRIPT_URL && t?.rowIndex) {
     const res = await saveToSheets('deleteTask', {area: t.area, rowIndex: t.rowIndex});
     if(res?.success) showToast('🗑 Eliminado de Google Sheets');
     else showToast('🗑 Eliminado localmente');
