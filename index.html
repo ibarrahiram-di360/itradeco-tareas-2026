@@ -20,6 +20,554 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
+  /* BOTÓN WA HEADER */
+  .wa-btn{padding:6px 13px;background:#25D366;color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+  .wa-btn:hover{background:#1ebe5e;}
+
+  /* PANEL WHATSAPP */
+  .wa-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;display:none;align-items:center;justify-content:center;}
+  .wa-overlay.open{display:flex;}
+  .wa-panel{background:#fff;border-radius:16px;width:560px;max-width:95vw;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.25);}
+  .wa-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
+  .wa-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
+  .wa-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+  .wa-body{padding:20px 24px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px;}
+  .wa-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+
+  /* TARJETA DE CONTACTO */
+  .wa-card{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
+  .wa-card-hdr{padding:12px 16px;background:var(--surface2);display:flex;align-items:center;justify-content:space-between;}
+  .wa-card-info{display:flex;align-items:center;gap:10px;}
+  .wa-avatar{width:36px;height:36px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+  .wa-name{font-weight:600;font-size:14px;}
+  .wa-num{font-size:11px;color:var(--muted);margin-top:1px;}
+  .wa-send-btn{padding:7px 14px;background:#25D366;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px;transition:all .15s;}
+  .wa-send-btn:hover{background:#1ebe5e;}
+  .wa-send-btn.disabled{background:#ccc;cursor:not-allowed;}
+  .wa-preview{padding:12px 16px;font-size:12px;color:#444;background:#f7f7f7;font-family:monospace;white-space:pre-wrap;max-height:120px;overflow-y:auto;border-top:1px solid var(--border);line-height:1.5;}
+  .wa-stats{padding:8px 16px;border-top:1px solid var(--border);display:flex;gap:12px;font-size:11px;}
+  .wa-stat{color:var(--muted);}
+  .wa-stat strong{color:var(--text);}
+  .wa-stat.red strong{color:var(--delay-c);}
+  .wa-stat.yellow strong{color:var(--prog-c);}
+  .wa-stat.green strong{color:var(--done-c);}
+  .wa-no-tasks{padding:10px 16px;font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);}
+
+  /* LOCK */
+  #lock{position:fixed;inset:0;background:#1a1916;display:flex;align-items:center;justify-content:center;z-index:9999;}
+  #lock.off{display:none;}
+  .lbox{background:#fff;border-radius:16px;padding:44px 48px;width:380px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);}
+  .llogo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1a1916;margin-bottom:6px;}
+  .llogo span{opacity:.4;font-weight:400;}
+  .lsub{font-size:13px;color:#9b9890;margin-bottom:28px;}
+  .llbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9b9890;text-align:left;margin-bottom:6px;}
+  .linp{width:100%;padding:11px 14px;border:1.5px solid #e2e0d8;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:#1a1916;outline:none;margin-bottom:12px;letter-spacing:3px;box-sizing:border-box;}
+  .linp:focus{border-color:#1a1916;}
+  .lbtn{width:100%;padding:11px;background:#1a1916;color:#f5f4f0;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
+  .lerr{font-size:12px;color:#b83232;margin-top:8px;min-height:16px;font-weight:500;}
+  .lhint{font-size:11px;color:#c0bfbb;margin-top:14px;}
+
+  /* LOADING */
+  #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:8888;flex-direction:column;gap:16px;}
+  #loading.off{display:none;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin 0.8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .load-txt{font-size:13px;color:var(--muted);font-weight:500;}
+
+  /* HEADER */
+  header{background:var(--text);color:#f5f4f0;padding:0 36px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.5px;}
+  .logo span{opacity:.4;font-weight:400;}
+  .hdr-r{display:flex;align-items:center;gap:10px;}
+  .dpill{font-size:12px;color:rgba(245,244,240,.45);font-weight:500;}
+  .sync-btn{padding:6px 13px;background:rgba(255,255,255,.1);color:#f5f4f0;border:1px solid rgba(255,255,255,.2);border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+  .sync-btn:hover{background:rgba(255,255,255,.18);}
+  .sync-btn.spin svg{animation:spin .8s linear infinite;}
+  .add-btn{padding:7px 15px;background:#f5f4f0;color:var(--text);border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;}
+  .add-btn:hover{opacity:.85;}
+
+  /* LAYOUT */
+  .app{display:flex;height:calc(100vh - 58px);}
+
+  /* SIDEBAR */
+  .sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:18px 10px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
+  .slbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 10px 5px;margin-top:4px;}
+  .nbtn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;transition:all .12s;}
+  .nbtn:hover{background:var(--surface2);color:var(--text);}
+  .nbtn.active{background:var(--text);color:#f5f4f0;}
+  .nbtn.active .bn{background:rgba(245,244,240,.15);color:rgba(245,244,240,.7);}
+  .ndot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .bn{margin-left:auto;background:var(--surface2);color:var(--muted);font-size:10.5px;font-weight:600;padding:1px 6px;border-radius:10px;}
+
+  /* MAIN */
+  .main{flex:1;overflow-y:auto;padding:28px 36px;}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .klbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+  .kval{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;line-height:1;}
+  .ksub{font-size:11px;color:var(--muted);margin-top:3px;}
+  .kbar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
+  .kbar-f{height:100%;border-radius:2px;background:var(--done-c);transition:width .6s;}
+
+  /* TOOLBAR */
+  .toolbar{display:flex;align-items:center;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+  .vtitle{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-right:6px;white-space:nowrap;}
+  .chip{padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .12s;white-space:nowrap;}
+  .chip:hover{border-color:var(--text);color:var(--text);}
+  .chip.active{background:var(--text);border-color:var(--text);color:#f5f4f0;}
+  .srch{margin-left:auto;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 12px;gap:6px;}
+  .srch input{background:transparent;border:none;outline:none;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);width:190px;}
+  .srch input::placeholder{color:var(--muted);}
+
+  /* TABLE */
+  .twrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  table{width:100%;border-collapse:collapse;}
+  thead tr{border-bottom:1px solid var(--border);background:var(--surface2);}
+  th{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:10px 14px;text-align:left;white-space:nowrap;}
+  tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:var(--surface2);}
+  td{padding:11px 14px;font-size:13px;vertical-align:middle;}
+  .grow{background:var(--surface2)!important;cursor:default!important;}
+  .grow:hover{background:var(--surface2)!important;}
+  .grow td{padding:8px 14px;border-bottom:1px solid var(--border);}
+  .glbl{font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;}
+  .tname{font-weight:500;max-width:340px;}
+  .prio{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+  .pQ1{background:rgba(26,25,22,.07);color:var(--text);}
+  .pQ2{background:rgba(196,122,30,.1);color:#a06018;}
+  .pQ3{background:rgba(26,95,168,.08);color:var(--plan-c);}
+  .st{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap;}
+  .sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+  .splan{background:var(--plan-bg);color:var(--plan-c);} .splan .sdot{background:var(--plan-c);}
+  .sprog{background:var(--prog-bg);color:var(--prog-c);} .sprog .sdot{background:var(--prog-c);}
+  .sdone{background:var(--done-bg);color:var(--done-c);} .sdone .sdot{background:var(--done-c);}
+  .sdelay{background:var(--delay-bg);color:var(--delay-c);} .sdelay .sdot{background:var(--delay-c);}
+  .swait{background:var(--wait-bg);color:var(--wait-c);} .swait .sdot{background:var(--wait-c);}
+  .cotag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;}
+  .ow{display:inline-flex;align-items:center;gap:5px;font-size:12px;}
+  .av{width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--surface2);color:var(--muted);}
+  .dt{font-size:12px;color:var(--muted);white-space:nowrap;}
+  .dt.ov{color:var(--delay-c);font-weight:600;}
+  .dt.sn{color:var(--prog-c);font-weight:600;}
+  .empty{padding:50px 20px;text-align:center;color:var(--muted);font-size:14px;}
+
+  /* MODAL */
+  .ovl{display:none;position:fixed;inset:0;background:rgba(26,25,22,.5);backdrop-filter:blur(3px);z-index:500;align-items:center;justify-content:center;}
+  .ovl.open{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;width:580px;max-height:88vh;overflow-y:auto;animation:mIn .18s ease;}
+  @keyframes mIn{from{transform:translateY(8px) scale(.98);opacity:0;}}
+  .mhdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px;}
+  .mtitle{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;line-height:1.3;}
+  .mx{width:28px;height:28px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mx:hover{color:var(--text);}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:14px;}
+  .ff{display:flex;flex-direction:column;gap:4px;}
+  .ff.full{grid-column:1/-1;}
+  .ff label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+  .fi,.fs,.fta{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .12s;width:100%;}
+  .fi:focus,.fs:focus,.fta:focus{border-color:var(--text);}
+  .fta{resize:vertical;min-height:70px;}
+  .mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;}
+  .btn{padding:8px 18px;border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .12s;}
+  .bsec{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+  .bsec:hover{color:var(--text);}
+  .bpri{background:var(--text);color:#f5f4f0;}
+  .bpri:hover{opacity:.85;}
+  .bpri:disabled{opacity:.5;cursor:not-allowed;}
+  .bdel{background:var(--delay-bg);color:var(--delay-c);border:1px solid rgba(184,50,50,.2);}
+
+  /* SETUP BANNER */
+  .setup-banner{background:#fff8e6;border:1px solid #f4c430;border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;}
+  .setup-banner.off{display:none;}
+  .setup-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+  .setup-txt{font-size:13px;line-height:1.6;}
+  .setup-txt strong{color:var(--text);}
+  .setup-txt code{background:#f0efe9;padding:1px 6px;border-radius:4px;font-size:12px;font-family:monospace;}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--text);color:#f5f4f0;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .25s;z-index:9999;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- LOCK -->
+<div id="lock">
+  <div class="lbox">
+    <div class="llogo">iTradeCo <span>· Tareas 2026</span></div>
+    <div class="lsub">Acceso restringido al equipo</div>
+    <div class="llbl">Contraseña de acceso</div>
+    <input type="password" id="pwd" class="linp" placeholder="••••••••" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="lbtn" onclick="unlock()">Entrar →</button>
+    <div class="lerr" id="lerr"></div>
+    <div class="lhint">🔒 Acceso exclusivo iTradeCo</div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="load-txt" id="load-txt">Conectando con Google Sheets...</div>
+</div>
+
+<header>
+  <div class="logo">iTradeCo <span>· Tareas 2026</span></div>
+  <div class="hdr-r">
+    <span class="dpill" id="dpill"></span>
+    <button class="sync-btn" id="sync-btn" onclick="loadTasks(true)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+      Actualizar
+    </button>
+    <button class="wa-btn" onclick="openWAPanel()">📱 Notificar Equipo</button>
+    <button class="add-btn" onclick="openAdd()">＋ Nueva tarea</button>
+  </div>
+</header>
+
+<!-- PANEL WHATSAPP -->
+<div class="wa-overlay" id="wa-overlay" onclick="closeWAPanel(event)">
+  <div class="wa-panel" onclick="event.stopPropagation()">
+    <div class="wa-hdr">
+      <div>
+        <div class="wa-title">📱 Notificar Equipo</div>
+        <div class="wa-sub">Mensaje personalizado por responsable — solo sus tareas</div>
+      </div>
+      <button class="mx" onclick="closeWAPanel()">✕</button>
+    </div>
+    <div class="wa-body" id="wa-body">
+      <div style="text-align:center;padding:32px;color:var(--muted)">⚙️ Generando mensajes...</div>
+    </div>
+    <div class="wa-foot">
+      <button class="btn bsec" onclick="closeWAPanel()">Cerrar</button>
+      <button class="btn bpri" onclick="generateWAMessages()">🔄 Regenerar</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <nav class="sidebar">
+    <div class="slbl">Empresa</div>
+    <button class="nbtn active" onclick="setArea('all',this)"><div class="ndot" style="background:#1a1916"></div>Todas<span class="bn" id="b-all">0</span></button>
+    <button class="nbtn" onclick="setArea('austar',this)"><div class="ndot" style="background:var(--austar)"></div>AuStar<span class="bn" id="b-austar">0</span></button>
+    <button class="nbtn" onclick="setArea('agro',this)"><div class="ndot" style="background:var(--agro)"></div>AgroNetwork<span class="bn" id="b-agro">0</span></button>
+    <button class="nbtn" onclick="setArea('b2b',this)"><div class="ndot" style="background:var(--b2b)"></div>Back2Back<span class="bn" id="b-b2b">0</span></button>
+    <button class="nbtn" onclick="setArea('hil',this)"><div class="ndot" style="background:var(--hil)"></div>HIL Inmobiliaria<span class="bn" id="b-hil">0</span></button>
+    <button class="nbtn" onclick="setArea('filkhi',this)"><div class="ndot" style="background:var(--filkhi)"></div>FILKHI LLC<span class="bn" id="b-filkhi">0</span></button>
+    <button class="nbtn" onclick="setArea('koru',this)"><div class="ndot" style="background:var(--koru)"></div>KORU SA<span class="bn" id="b-koru">0</span></button>
+    <button class="nbtn" onclick="setArea('admin',this)"><div class="ndot" style="background:var(--admin)"></div>Admin & Gobernanza<span class="bn" id="b-admin">0</span></button>
+    <div class="slbl">Prioridad</div>
+    <button class="nbtn" onclick="setPrio('all',this)">Todas</button>
+    <button class="nbtn" onclick="setPrio('Q1',this)">🔴 Q1 — Alta</button>
+    <button class="nbtn" onclick="setPrio('Q2',this)">🟡 Q2 — Media</button>
+    <button class="nbtn" onclick="setPrio('Q3',this)">🟢 Q3 — Baja</button>
+  </nav>
+
+  <main class="main">
+
+    <!-- BANNER DE CONFIGURACIÓN -->
+    <div class="setup-banner" id="setup-banner">
+      <div class="setup-icon">⚙️</div>
+      <div class="setup-txt">
+        <strong>Configuración pendiente:</strong> Para que el dashboard lea y guarde datos en Google Sheets, necesitas configurar el Apps Script.<br>
+        1. Abre el <a href="https://docs.google.com/spreadsheets/d/1fFcKjSNJCc7reOOUSYeY7YIXtd9MOSejpchtjkB52oU" target="_blank">Google Sheet de Tareas 2026</a> → <strong>Extensiones → Apps Script</strong><br>
+        2. Pega el código del archivo <code>appsscript.js</code> y guarda<br>
+        3. Haz clic en <strong>Implementar → Nueva implementación → Aplicación web</strong> → Ejecutar como: <strong>Yo</strong> → Acceso: <strong>Cualquier usuario</strong><br>
+        4. Copia la URL generada y pégala en la variable <code>APPS_SCRIPT_URL</code> de este archivo<br>
+        Mientras tanto, el dashboard funciona con datos locales.
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="klbl">Total Tareas</div><div class="kval" id="k-tot">0</div><div class="ksub">todas las empresas</div></div>
+      <div class="kpi"><div class="klbl">Completadas</div><div class="kval" id="k-don">0</div><div class="ksub" id="k-pct">0%</div><div class="kbar"><div class="kbar-f" id="k-bar" style="width:0%"></div></div></div>
+      <div class="kpi"><div class="klbl">En Proceso</div><div class="kval" id="k-pro">0</div><div class="ksub">activas</div></div>
+      <div class="kpi"><div class="klbl">Retrasadas</div><div class="kval" id="k-del" style="color:var(--delay-c)">0</div><div class="ksub">requieren acción</div></div>
+      <div class="kpi"><div class="klbl">En Espera</div><div class="kval" id="k-wai" style="color:var(--wait-c)">0</div><div class="ksub">pendientes</div></div>
+    </div>
+
+    <div class="toolbar">
+      <span class="vtitle" id="vtitle">Todas las tareas</span>
+      <button class="chip active" onclick="setSt('all',this)">Todos</button>
+      <button class="chip" onclick="setSt('plan',this)">📋 Según lo planificado</button>
+      <button class="chip" onclick="setSt('prog',this)">⚙️ En proceso</button>
+      <button class="chip" onclick="setSt('done',this)">✅ Finalizado</button>
+      <button class="chip" onclick="setSt('delay',this)">🔴 Retrasado</button>
+      <button class="chip" onclick="setSt('wait',this)">⏸ En espera</button>
+      <div class="srch"><span style="color:var(--muted);font-size:13px">🔍</span><input type="text" placeholder="Buscar tarea..." oninput="doQ(this.value)"></div>
+    </div>
+
+    <div class="twrap">
+      <table>
+        <thead><tr><th>Tarea / Objetivo</th><th>Empresa</th><th>Prioridad</th><th>Responsable</th><th>Estado</th><th>Inicio</th><th>Cierre</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none">No hay tareas con ese criterio.</div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="ovl" id="ovl" onclick="closeMod(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr">
+      <div class="mtitle" id="mtitle">Nueva tarea</div>
+      <button class="mx" onclick="closeMod()">✕</button>
+    </div>
+    <div class="fgrid">
+      <div class="ff full"><label>Objetivo / Tarea</label><input type="text" class="fi" id="m-obj" placeholder="Descripción..."></div>
+      <div class="ff"><label>Empresa</label>
+        <select class="fs" id="m-area">
+          <option value="austar">AuStar</option><option value="agro">AgroNetwork</option>
+          <option value="b2b">Back2Back</option><option value="hil">HIL Inmobiliaria</option>
+          <option value="filkhi">FILKHI LLC</option><option value="koru">KORU SA</option>
+          <option value="admin">Admin & Gobernanza</option>
+        </select>
+      </div>
+      <div class="ff"><label>Sub-grupo</label><input type="text" class="fi" id="m-grp" placeholder="Ej: Comercial, Di360..."></div>
+      <div class="ff"><label>Prioridad</label>
+        <select class="fs" id="m-prio"><option value="Q1">Q1 — Alta</option><option value="Q2">Q2 — Media</option><option value="Q3">Q3 — Baja</option></select>
+      </div>
+      <div class="ff"><label>Responsable</label><input type="text" class="fi" id="m-own" placeholder="Nombre o email..."></div>
+      <div class="ff"><label>Estado</label>
+        <select class="fs" id="m-st">
+          <option value="plan">Según lo planificado</option><option value="prog">En proceso</option>
+          <option value="done">Finalizado</option><option value="delay">Retrasado</option><option value="wait">En espera</option>
+        </select>
+      </div>
+      <div class="ff"><label>Fecha inicio</label><input type="date" class="fi" id="m-ini"></div>
+      <div class="ff"><label>Fecha cierre</label><input type="date" class="fi" id="m-end"></div>
+      <div class="ff full"><label>Notas</label><textarea class="fta" id="m-not" placeholder="Contexto, acuerdos, links..."></textarea></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn bdel" id="bdel" onclick="delT()" style="display:none">🗑 Eliminar</button>
+      <button class="btn bsec" onclick="closeMod()">Cancelar</button>
+      <button class="btn bpri" id="save-btn" onclick="saveT()">Guardar en Sheets</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk6GU24KlmuxftmswIpA76YBhTowixPwOjkotgAlGCD85noj6tVRh4ge6tiSACnljbog/exec';
+const ACCESS_KEY = 'itradeco2026';
+const AM = {
+  austar: {lbl:'AuStar',col:'var(--austar)'},
+  agro:   {lbl:'AgroNetwork',col:'var(--agro)'},
+  b2b:    {lbl:'Back2Back',col:'var(--b2b)'},
+  hil:    {lbl:'HIL Inmobiliaria',col:'var(--hil)'},
+  filkhi: {lbl:'FILKHI LLC',col:'var(--filkhi)'},
+  koru:   {lbl:'KORU SA',col:'var(--koru)'},
+  admin:  {lbl:'Admin',col:'var(--admin)'},
+};
+const SM = {
+  plan:  ['splan','📋 Según lo planificado'],
+  prog:  ['sprog','⚙️ En proceso'],
+  done:  ['sdone','✅ Finalizado'],
+  delay: ['sdelay','🔴 Retrasado'],
+  wait:  ['swait','⏸ En espera'],
+};
+let tasks=[];let nid=1000;let aF='all',sF='all',pF='all',q='',eId=null,eTask=null;let usingSheets=false;
+function unlock(){
+  const val=document.getElementById('pwd').value.trim();
+  if(val===ACCESS_KEY){
+    document.getElementById('lock').classList.add('off');
+    sessionStorage.setItem('itc_auth','1');
+    loadTasks();
+  } else {
+    const e=document.getElementById('lerr');
+    e.textContent='⚠ Contraseña incorrecta.';
+    document.getElementById('pwd').value='';
+    document.getElementById('pwd').focus();
+    setTimeout(()=>e.textContent='',3000);
+  }
+}
+async function loadTasks(manual=false){
+  if(manual)showToast('🔄 Actualizando desde Google Sheets...');
+  const syncBtn=document.getElementById('sync-btn');
+  syncBtn.classList.add('spin');
+  if(APPS_SCRIPT_URL){
+    try{
+      document.getElementById('load-txt').textContent='Cargando datos desde Google Sheets...';
+      if(!manual)document.getElementById('loading').classList.remove('off');
+      const res=await fetch(APPS_SCRIPT_URL+'?action=getTasks',{mode:'cors'});
+      const data=await res.json();
+      if(data.tasks&&Array.isArray(data.tasks)){
+        tasks=data.tasks;usingSheets=true;
+        document.getElementById('setup-banner').classList.add('off');
+        if(manual)showToast('✅ Datos actualizados desde Google Sheets');
+      }
+    }catch(err){
+      console.error('Error cargando sheets:',err);
+      if(manual)showToast('⚠ Error al conectar. Usando datos locales.');
+      if(!tasks.length)loadFallbackData();
+    }
+  }else{loadFallbackData();}
+  document.getElementById('loading').classList.add('off');
+  syncBtn.classList.remove('spin');
+  render();
+}async function saveToSheets(action,data){
+  if(!APPS_SCRIPT_URL)return null;
+  try{
+    const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action,...data})});
+    return await res.json();
+  }catch(err){console.error('Error guardando:',err);return null;}
+}
+function fmt(d){if(!d)return'—';const[y,m,day]=d.split('-');return`${day}/${m}/${String(y).slice(-2)}`;}
+function dcls(d,s){if(!d||s==='done')return'dt';const diff=Math.ceil((new Date(d)-new Date())/86400000);return diff<0?'dt ov':diff<=4?'dt sn':'dt';}
+function coTag(a){const m=AM[a];if(!m)return'';return`<span class="cotag" style="background:${m.col}18;color:${m.col}">${m.lbl}</span>`;}
+function pB(p){if(!p)return'<span style="color:var(--muted);font-size:12px">—</span>';return`<span class="prio p${p}">${p}</span>`;}
+function sB(s){const[c,l]=SM[s]||['splan',s];return`<span class="st ${c}"><span class="sdot"></span>${l}</span>`;}
+function owC(o){if(!o)return'<span style="color:var(--muted);font-size:12px">—</span>';const sh=o.length>16?o.slice(0,16)+'…':o;const ini=o.split(/[@.\s]/).filter(Boolean).map(w=>w[0]?.toUpperCase()||'').join('').slice(0,2);return`<div class="ow"><div class="av">${ini}</div>${sh}</div>`;}
+function render(){
+  const fil=tasks.filter(t=>{
+    if(aF!=='all'&&t.area!==aF)return false;
+    if(sF!=='all'&&t.st!==sF)return false;
+    if(pF!=='all'&&t.prio!==pF)return false;
+    if(q&&!t.obj.toLowerCase().includes(q.toLowerCase())&&!(t.grp||'').toLowerCase().includes(q.toLowerCase()))return false;
+    return true;
+  });
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
+  const groups={};
+  fil.forEach(t=>{const k=t.area+'|||'+(t.grp||t.area);if(!groups[k])groups[k]=[];groups[k].push(t);});
+  let cnt=0;
+  Object.entries(groups).forEach(([k,items])=>{
+    const[area,grp]=k.split('|||');
+    const col=AM[area]?.col||'#555';
+    const gr=document.createElement('tr');gr.className='grow';
+    gr.innerHTML=`<td colspan="7"><span class="glbl" style="color:${col}">${grp}</span></td>`;
+    tbody.appendChild(gr);
+    items.forEach(t=>{
+      cnt++;
+      const tr=document.createElement('tr');
+      tr.onclick=()=>openEdit(t);
+      tr.innerHTML=`<td><span class="tname">${t.obj}</span></td><td>${coTag(t.area)}</td><td>${pB(t.prio)}</td><td>${owC(t.own)}</td><td>${sB(t.st)}</td><td><span class="dt">${fmt(t.ini)}</span></td><td><span class="${dcls(t.end,t.st)}">${fmt(t.end)}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  });
+  document.getElementById('empty').style.display=cnt===0?'block':'none';
+  kpis();badges();
+}
+function kpis(){
+  const t=tasks;
+  const don=t.filter(x=>x.st==='done').length;
+  const pro=t.filter(x=>x.st==='prog').length;
+  const del=t.filter(x=>x.st==='delay').length;
+  const wai=t.filter(x=>x.st==='wait').length;
+  const pct=t.length?Math.round(don/t.length*100):0;
+  document.getElementById('k-tot').textContent=t.length;
+  document.getElementById('k-don').textContent=don;
+  document.getElementById('k-pct').textContent=pct+'% del total';
+  document.getElementById('k-bar').style.width=pct+'%';
+  document.getElementById('k-pro').textContent=pro;
+  document.getElementById('k-del').textContent=del;
+  document.getElementById('k-wai').textContent=wai;
+}
+function badges(){
+  document.getElementById('b-all').textContent=tasks.length;
+  ['austar','agro','b2b','hil','filkhi','koru','admin'].forEach(a=>{
+    const el=document.getElementById('b-'+a);
+    if(el)el.textContent=tasks.filter(t=>t.area===a).length;
+  });
+}
+function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'HIL Inmobiliaria',filkhi:'FILKHI LLC',koru:'KORU SA',admin:'Admin & Gobernanza'};document.getElementById('vtitle').textContent=n[a]||a;render();}
+function setSt(s,btn){sF=s;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+function setPrio(p){pF=p;render();}
+function doQ(v){q=v;render();}function openAdd(){eId=null;eTask=null;document.getElementById('mtitle').textContent='Nueva tarea';['m-obj','m-grp','m-own','m-not'].forEach(id=>document.getElementById(id).value='');document.getElementById('m-area').value='austar';document.getElementById('m-prio').value='Q1';document.getElementById('m-st').value='plan';document.getElementById('m-ini').value='';document.getElementById('m-end').value='';document.getElementById('bdel').style.display='none';document.getElementById('save-btn').textContent=APPS_SCRIPT_URL?'Guardar en Sheets ✓':'Guardar';document.getElementById('ovl').classList.add('open');}
+function openEdit(t){eId=t.id;eTask=t;document.getElementById('mtitle').textContent=t.obj;document.getElementById('m-obj').value=t.obj;document.getElementById('m-area').value=t.area;document.getElementById('m-grp').value=t.grp||'';document.getElementById('m-prio').value=t.prio||'Q1';document.getElementById('m-own').value=t.own||'';document.getElementById('m-st').value=t.st;document.getElementById('m-ini').value=t.ini||'';document.getElementById('m-end').value=t.end||'';document.getElementById('m-not').value=t.not||'';document.getElementById('bdel').style.display='inline-flex';document.getElementById('save-btn').textContent=APPS_SCRIPT_URL?'Guardar en Sheets ✓':'Guardar';document.getElementById('ovl').classList.add('open');}
+function closeMod(e){if(e&&e.target!==document.getElementById('ovl'))return;document.getElementById('ovl').classList.remove('open');}
+async function saveT(){const obj=document.getElementById('m-obj').value.trim();if(!obj)return alert('El objetivo no puede estar vacío.');const saveBtn=document.getElementById('save-btn');saveBtn.disabled=true;saveBtn.textContent='Guardando...';
+  const d={obj,area:document.getElementById('m-area').value,grp:document.getElementById('m-grp').value.trim(),prio:document.getElementById('m-prio').value,own:document.getElementById('m-own').value.trim(),st:document.getElementById('m-st').value,ini:document.getElementById('m-ini').value,end:document.getElementById('m-end').value,not:document.getElementById('m-not').value.trim()};
+  if(eId&&eTask){const idx=tasks.findIndex(t=>t.id===eId);if(idx>-1){tasks[idx]={...tasks[idx],...d};if(APPS_SCRIPT_URL&&eTask.rowIndex){const res=await saveToSheets('updateTask',{...d,rowIndex:eTask.rowIndex});if(res?.success)showToast('✅ Guardado en Google Sheets');else{showToast('⚠ Error al guardar en Sheets');console.error('Save failed:',res);}}else if(!eTask.rowIndex){showToast('⚠ Sin rowIndex — no se puede guardar');console.error('rowIndex missing:',eTask);}else{showToast('✅ Tarea actualizada (local)');}}}else{const newTask={id:nid++,rowIndex:null,...d};tasks.push(newTask);if(APPS_SCRIPT_URL){const res=await saveToSheets('addTask',d);if(res?.success){newTask.rowIndex=res.rowIndex;showToast('✅ Nueva tarea guardada en Google Sheets');}else{showToast('⚠ Error al guardar en Sheets');}}else{showToast('✅ Tarea agregada (local)');}}
+  saveBtn.disabled=false;saveBtn.textContent=usingSheets?'Guardar en Sheets ✓':'Guardar';document.getElementById('ovl').classList.remove('open');render();}
+async function delT(){if(!eId||!confirm('¿Eliminar esta tarea?'))return;const t=tasks.find(x=>x.id===eId);tasks=tasks.filter(t=>t.id!==eId);if(APPS_SCRIPT_URL&&t?.rowIndex){const res=await saveToSheets('deleteTask',{area:t.area,rowIndex:t.rowIndex});if(res?.success)showToast('🗑 Eliminado de Google Sheets');else showToast('🗑 Eliminado localmente');}else{showToast('🗑 Tarea eliminada');}
+  document.getElementById('ovl').classList.remove('open');render();}
+function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}function loadFallbackData(){tasks=[{id:1,area:'austar',grp:'AuStar Comercial',obj:'Socio Comercial Norte — cierre distribución Q1',prio:'Q1',own:'ACL.',st:'prog',ini:'2026-04-01',end:'2026-04-15',not:''},{id:2,area:'austar',grp:'AuStar Comercial',obj:'Grow For Gold — campaña Q1',prio:'Q1',own:'gerencia@austar.mx',st:'prog',ini:'2026-04-01',end:'2026-09-30',not:''},{id:3,area:'agro',grp:'AgroNetwork',obj:'Portada edición abril 2026',prio:'Q1',own:'agroamigo.net@gmail.com',st:'done',ini:'2026-04-01',end:'2026-04-15',not:''},{id:4,area:'b2b',grp:'Back2Back Finance',obj:'Misión y Objetivos estratégicos 2026',prio:'Q1',own:'contraloria@itradeco',st:'prog',ini:'2026-04-01',end:'2026-04-15',not:''},{id:5,area:'hil',grp:'Inmuebles',obj:'Florentina Residencial — inicio desarrollo',prio:'Q1',own:'Hiram / Alejandra',st:'prog',ini:'2026-04-01',end:'2026-12-31',not:''},{id:6,area:'filkhi',grp:'FILKHI Website',obj:'Contenido "Quiénes somos" — versión EN/ES',prio:'Q1',own:'Hiram',st:'delay',ini:'2026-04-01',end:'2026-04-15',not:''},{id:7,area:'koru',grp:'KORU Soul Business Advisory',obj:'Programa mentoring Q1 2026 — apertura inscripciones',prio:'Q1',own:'Hiram',st:'prog',ini:'2026-04-01',end:'2026-04-15',not:''},{id:8,area:'admin',grp:'Gobernanza iTradeCo',obj:'OKRs Q1 2026 — definición y comunicación al equipo',prio:'Q1',own:'Hiram',st:'done',ini:'2026-04-01',end:'2026-04-15',not:''}];}
+// ─── EQUIPO WHATSAPP
+const WA_TEAM=[
+  {name:'Accountability Leader',phone:'523332225659',role:'Liderazgo'},
+  {name:'Soul Living',phone:'523311778801',role:'Soul Living'},
+  {name:'Contabilidad',phone:'523318451206',role:'Contabilidad'},
+  {name:'Contraloría & Finanzas',phone:'523313527283',role:'Contraloría'},
+  {name:'Comercial iTradeCo',phone:'523322173082',role:'Comercial'},
+];
+function openWAPanel(){document.getElementById('wa-overlay').classList.add('open');generateWAMessages();}
+function closeWAPanel(e){if(!e||e.target===document.getElementById('wa-overlay'))document.getElementById('wa-overlay').classList.remove('open');}
+function generateWAMessages(){
+  const body=document.getElementById('wa-body');body.innerHTML='';
+  const today=new Date();
+  const pad=n=>n<10?'0'+n:String(n);
+  const todayStr=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+  const nw=new Date(today.getTime()+7*24*60*60*1000);
+  const nwStr=nw.getFullYear()+'-'+pad(nw.getMonth()+1)+'-'+pad(nw.getDate());
+  const days=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const months=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const dateStr=days[today.getDay()]+' '+today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear();
+  const tipo=today.getDay()===1?'🚀 Arranque de Semana':'📊 Revisión Semanal';
+  WA_TEAM.forEach(member=>{
+    const mt=tasks.filter(t=>{const o=(t.own||'').toLowerCase();return o.includes(member.name.split(' ')[0].toLowerCase())||o.includes(member.role.toLowerCase())||o.includes(member.phone.slice(-4));});
+    const ov=mt.filter(t=>t.st!=='done'&&t.end&&t.end<todayStr);
+    const tw=mt.filter(t=>t.st!=='done'&&t.end&&t.end>=todayStr&&t.end<=nwStr);
+    const ip=mt.filter(t=>t.st==='prog'&&(!t.end||t.end>nwStr));
+    const dn=mt.filter(t=>t.st==='done');
+    const pe=mt.filter(t=>t.st!=='done');
+    let msg=`Hola *${member.name}* 👋\n\n*iTradeCo · ${tipo}*\n_${dateStr}_\n\n`;
+    if(ov.length>0){msg+=`🔴 *VENCIDAS (${ov.length})*\n`;ov.forEach(t=>{msg+=`  • ${t.obj} [${fmt(t.end)}]\n`;});msg+='\n';}
+    if(tw.length>0){msg+=`🟡 *VENCEN ESTA SEMANA (${tw.length})*\n`;tw.forEach(t=>{msg+=`  • ${t.obj} — vence ${fmt(t.end)}\n`;});msg+='\n';}
+    if(ip.length>0){msg+=`🔵 *EN PROCESO (${ip.length})*\n`;ip.slice(0,3).forEach(t=>{msg+=`  • ${t.obj}\n`;});if(ip.length>3)msg+=`  _...y ${ip.length-3} más_\n`;msg+='\n';}
+    if(ov.length===0&&tw.length===0&&pe.length>0)msg+=`✅ *Todo al día* — ${pe.length} tareas en seguimiento\n\n`;
+    msg+=`✅ Completadas: *${dn.length}* | Pendientes: *${pe.length}*\n\n🔗 https://ibarrahiram-di360.github.io/itradeco-tareas-2026/`;
+    const waUrl=`https://wa.me/${member.phone}?text=${encodeURIComponent(msg)}`;
+    const ini=member.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const hasAlerts=ov.length>0||tw.length>0;
+    const card=document.createElement('div');card.className='wa-card';
+    card.innerHTML=`<div class="wa-card-hdr"><div class="wa-card-info"><div class="wa-avatar" style="background:${hasAlerts?'#b83232':'#25D366'}">${ini}</div><div><div class="wa-name">${member.name}</div><div class="wa-num">+${member.phone} · ${mt.length} tarea${mt.length!==1?'s':''}</div></div></div><a href="${waUrl}" target="_blank" class="wa-send-btn ${mt.length===0?'disabled':''">📱 Enviar</a></div><div class="wa-stats"><span class="wa-stat red">🔴 Vencidas: <strong>${ov.length}</strong></span><span class="wa-stat yellow">🟡 Esta semana: <strong>${tw.length}</strong></span><span class="wa-stat">🔵 En proceso: <strong>${ip.length}</strong></span><span class="wa-stat green">✅ Listas: <strong>${dn.length}</strong></span></div>${mt.length===0?'<div class="wa-no-tasks">⚠ Sin tareas asignadas. Verifica el campo Responsable en el Sheet.</div>':`<div class="wa-preview">${msg.replace(/\*/g,'').replace(/_/g,'')}</div>`}`;
+    body.appendChild(card);
+  });
+}(function init(){
+  const n=new Date();
+  const D=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('dpill').textContent=`${D[n.getDay()]} ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()}`;
+  if(sessionStorage.getItem('itc_auth')==='1'){
+    document.getElementById('lock').classList.add('off');
+    loadTasks();
+  }else{
+    document.getElementById('loading').classList.add('off');
+    setTimeout(()=>document.getElementById('pwd').focus(),200);
+  }
+})();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iTradeCo · Tareas 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:#e2e0d8;
+    --text:#1a1916;--muted:#9b9890;
+    --austar:#2d7d46;--agro:#c47a1e;--b2b:#1a5fa8;
+    --hil:#7b3fa0;--filkhi:#b83232;--koru:#1d6b6b;--admin:#555;
+    --plan-c:#1a5fa8;--plan-bg:rgba(26,95,168,.08);
+    --prog-c:#c47a1e;--prog-bg:rgba(196,122,30,.08);
+    --done-c:#2d7d46;--done-bg:rgba(45,125,70,.08);
+    --delay-c:#b83232;--delay-bg:rgba(184,50,50,.08);
+    --wait-c:#7b3fa0;--wait-bg:rgba(123,63,160,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
   /* LOCK */
   #lock{position:fixed;inset:0;background:#1a1916;display:flex;align-items:center;justify-content:center;z-index:9999;}
   #lock.off{display:none;}
