@@ -764,3 +764,19 @@ function generateWAMessages(){
   });
 }
 
+(function init(){
+  const n = new Date();
+  const D = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const M = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('dpill').textContent = D[n.getDay()]+' '+n.getDate()+' '+M[n.getMonth()]+' '+n.getFullYear();
+  if(sessionStorage.getItem('itc_auth')==='1'){
+    document.getElementById('lock').classList.add('off');
+    loadTasks();
+  } else {
+    document.getElementById('loading').classList.add('off');
+    setTimeout(()=>document.getElementById('pwd').focus(), 200);
+  }
+})();
+</script>
+</body>
+</html>
