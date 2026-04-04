@@ -260,7 +260,7 @@
     <button class="nbtn" onclick="setArea('hil',this)"><div class="ndot" style="background:var(--hil)"></div>HIL Inmobiliaria<span class="bn" id="b-hil">0</span></button>
     <button class="nbtn" onclick="setArea('filkhi',this)"><div class="ndot" style="background:var(--filkhi)"></div>FILKHI LLC<span class="bn" id="b-filkhi">0</span></button>
     <button class="nbtn" onclick="setArea('koru',this)"><div class="ndot" style="background:var(--koru)"></div>KORU SA<span class="bn" id="b-koru">0</span></button>
-    <button class="nbtn" onclick="setArea('admin',this)"><div class="ndot" style="background:var(--admin)"></div>Admin & Gobernanza<span class="bn" id="b-admin">0</span></button>
+    <button class="nbtn" onclick="setArea('admin',this)"><div class="ndot" style="background:var(--admin)"></div>L2AB2A<span class="bn" id="b-admin">0</span></button>
     <div class="slbl">Prioridad</div>
     <button class="nbtn" onclick="setPrio('all',this)">Todas</button>
     <button class="nbtn" onclick="setPrio('Q1',this)">🔴 Q1 — Alta</button>
@@ -326,7 +326,7 @@
           <option value="austar">AuStar</option><option value="agro">AgroNetwork</option>
           <option value="b2b">Back2Back</option><option value="hil">HIL Inmobiliaria</option>
           <option value="filkhi">FILKHI LLC</option><option value="koru">KORU SA</option>
-          <option value="admin">Admin & Gobernanza</option>
+          <option value="admin">L2AB2A</option>
         </select>
       </div>
       <div class="ff"><label>Sub-grupo</label><input type="text" class="fi" id="m-grp" placeholder="Ej: Comercial, Di360..."></div>
@@ -518,7 +518,7 @@ function badges(){
 }
 
 // ─── FILTROS ─────────────────────────────────────────────────
-function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'HIL Inmobiliaria',filkhi:'FILKHI LLC',koru:'KORU SA',admin:'Admin & Gobernanza'};document.getElementById('vtitle').textContent=n[a]||a;render();}
+function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'HIL Inmobiliaria',filkhi:'FILKHI LLC',koru:'KORU SA',admin:'L2AB2A'};document.getElementById('vtitle').textContent=n[a]||a;render();}
 function setSt(s,btn){sF=s;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
 function setPrio(p){pF=p;render();}
 function doQ(v){q=v;render();}
