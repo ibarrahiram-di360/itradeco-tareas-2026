@@ -333,7 +333,20 @@
       <div class="ff"><label>Prioridad</label>
         <select class="fs" id="m-prio"><option value="Q1">Q1 — Alta</option><option value="Q2">Q2 — Media</option><option value="Q3">Q3 — Baja</option></select>
       </div>
-      <div class="ff"><label>Responsable</label><input type="text" class="fi" id="m-own" placeholder="Nombre o email..."></div>
+      <div class="ff"><label>Responsable</label>
+        <select class="fs" id="m-own">
+          <option value="">— Seleccionar responsable —</option>
+          <option value="Valeria">Valeria · AuStar / AgroNetwork</option>
+          <option value="Yaneth">Yaneth · AuStar</option>
+          <option value="Ale">Ale · Soul Living. Real S.</option>
+          <option value="Damian Solis">Damian Solis · Back2Back</option>
+          <option value="Hiram">Hiram · FILKHI LLC / KORU SA</option>
+          <option value="Hanne">Hanne · L2AB2A</option>
+          <option value="Paty Barrera">Paty Barrera · L2AB2A</option>
+          <option value="Kath">Kath · L2AB2A</option>
+          <option value="ACL.">Accountability Leader</option>
+          <option value="iTrade Co">iTrade Co · Admin</option>
+        </select></div>
       <div class="ff"><label>Estado</label>
         <select class="fs" id="m-st">
           <option value="plan">Según lo planificado</option><option value="prog">En proceso</option>
@@ -663,12 +676,20 @@ function loadFallbackData(){
 
 // ─── INIT ────────────────────────────────────────────────────
 // ─── EQUIPO WHATSAPP ─────────────────────────────────────────
+// ── DIRECTORIO GLOBAL DEL EQUIPO ──────────────────────────────────────────
+// name: nombre que aparece en el selector y en el Sheet (campo Responsable)
+// phone: número WA con código de país sin +
+// projects: proyectos donde es líder (referencial, no limita asignación)
 const WA_TEAM = [
-  { name: 'Accountability Leader', phone: '523332225659', role: 'Liderazgo' },
-  { name: 'Soul Living',           phone: '523311778801', role: 'Soul Living' },
-  { name: 'Contabilidad',          phone: '523318451206', role: 'Contabilidad' },
-  { name: 'Contraloría & Finanzas',phone: '523313527283', role: 'Contraloría' },
-  { name: 'Comercial iTradeCo',    phone: '523322173082', role: 'Comercial' },
+  { name: 'Yaneth',       phone: '523323359705' },
+  { name: 'Ale',         phone: '523311778801' },
+  { name: 'Damian',      phone: '523311114670' },
+  { name: 'Hiram',       phone: '523316609459' },
+  { name: 'Rocio',       phone: '523332225659' },
+  { name: 'Hanne',       phone: '523325483965' },
+  { name: 'Paty',        phone: '523313527283' },
+  { name: 'Kath',        phone: '523318451206' },
+  { name: 'Valeria',     phone: '523322173082' },
 ];
 
 function openWAPanel(){
@@ -684,108 +705,62 @@ function generateWAMessages(){
   const body = document.getElementById('wa-body');
   body.innerHTML = '';
   const today = new Date();
-  const todayStr = today.getFullYear()+'-'+(today.getMonth()<9?'0':'')+(today.getMonth()+1)+'-'+(today.getDate()<10?'0':'')+today.getDate();
-  const nextWeek = new Date(today.getTime()+7*24*60*60*1000);
-  const nextWeekStr = nextWeek.getFullYear()+'-'+(nextWeek.getMonth()<9?'0':'')+(nextWeek.getMonth()+1)+'-'+(nextWeek.getDate()<10?'0':'')+nextWeek.getDate();
-  const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const todayStr = today.toISOString().slice(0,10);
+  const nextWeek = new Date(today.getTime()+7*24*60*60*1000).toISOString().slice(0,10);
+  const dayNames = ['Dom','Lun','Mar','Mi\u00e9','Jue','Vie','S\u00e1b'];
   const monthNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   const dateStr = dayNames[today.getDay()]+' '+today.getDate()+' '+monthNames[today.getMonth()]+' '+today.getFullYear();
   const isMonday = today.getDay()===1;
-  const tipo = isMonday ? '🚀 Arranque de Semana' : '📊 Revisión Semanal';
-
-  WA_TEAM.forEach(member => {
-    // Buscar tareas de este miembro
-    const memberTasks = tasks.filter(t => {
-      const own = (t.own||'').toLowerCase();
-      const name = member.name.toLowerCase();
-      const role = member.role.toLowerCase();
-      return own.includes(name.split(' ')[0].toLowerCase()) ||
-             own.includes(role.toLowerCase()) ||
-             own.includes(member.phone.slice(-4));
-    });
-
-    // Clasificar sus tareas
-    const overdue   = memberTasks.filter(t => t.st!=='done' && t.end && t.end < todayStr);
-    const thisWeek  = memberTasks.filter(t => t.st!=='done' && t.end && t.end >= todayStr && t.end <= nextWeekStr);
-    const inProg    = memberTasks.filter(t => t.st==='prog' && (!t.end || t.end > nextWeekStr));
-    const done      = memberTasks.filter(t => t.st==='done');
-    const pending   = memberTasks.filter(t => t.st!=='done');
-
-    // Construir mensaje personalizado
-    let msg = `Hola *${member.name}* 👋\n\n`;
-    msg += `*iTradeCo · ${tipo}*\n`;
-    msg += `_${dateStr}_\n\n`;
-
-    if(overdue.length > 0){
-      msg += `🔴 *VENCIDAS (${overdue.length})*\n`;
-      overdue.forEach(t => { msg += `  • ${t.obj} [${fmt(t.end)}]\n`; });
-      msg += '\n';
-    }
-    if(thisWeek.length > 0){
-      msg += `🟡 *VENCEN ESTA SEMANA (${thisWeek.length})*\n`;
-      thisWeek.forEach(t => { msg += `  • ${t.obj} — vence ${fmt(t.end)}\n`; });
-      msg += '\n';
-    }
-    if(inProg.length > 0){
-      msg += `🔵 *EN PROCESO (${inProg.length})*\n`;
-      inProg.slice(0,3).forEach(t => { msg += `  • ${t.obj}\n`; });
-      if(inProg.length > 3) msg += `  _...y ${inProg.length-3} más_\n`;
-      msg += '\n';
-    }
-    if(overdue.length===0 && thisWeek.length===0 && pending.length>0){
-      msg += `✅ *Todo al día* — ${pending.length} tareas en seguimiento\n\n`;
-    }
-    msg += `✅ Completadas: *${done.length}* | Pendientes: *${pending.length}*\n`;
-    msg += `\n🔗 https://ibarrahiram-di360.github.io/itradeco-tareas-2026/`;
-
-    const waUrl = `https://wa.me/${member.phone}?text=${encodeURIComponent(msg)}`;
-    const initials = member.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const tipo = isMonday ? '\uD83D\uDE80 Arranque de Semana' : '\uD83D\uDCCA Revisi\u00f3n Semanal';
+  const byMember = {};
+  tasks.forEach(t => {
+    const own = (t.own||'').trim();
+    if(!own) return;
+    if(!byMember[own]) byMember[own] = [];
+    byMember[own].push(t);
+  });
+  const membersWithTasks = WA_TEAM.filter(m => byMember[m.name] && byMember[m.name].length > 0);
+  if(membersWithTasks.length === 0){
+    body.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted)">\u26A0\uFE0F Sin tareas asignadas al equipo.<br>Asigna responsables al crear tareas.</div>';
+    return;
+  }
+  membersWithTasks.forEach(member => {
+    const memberTasks = byMember[member.name] || [];
+    const overdue  = memberTasks.filter(t => t.st!=='done' && t.end && t.end < todayStr);
+    const thisWeek = memberTasks.filter(t => t.st!=='done' && t.end && t.end >= todayStr && t.end <= nextWeek);
+    const inProg   = memberTasks.filter(t => t.st==='prog' && (!t.end || t.end > nextWeek));
+    const done     = memberTasks.filter(t => t.st==='done');
+    const pending  = memberTasks.filter(t => t.st!=='done');
     const hasAlerts = overdue.length > 0 || thisWeek.length > 0;
-
+    let msg = 'Hola *'+member.name+'* \uD83D\uDC4B\n\n';
+    msg += '*iTradeCo \u00B7 '+tipo+'*\n_'+dateStr+'_\n\n';
+    if(overdue.length > 0){ msg += '\uD83D\uDD34 *VENCIDAS ('+overdue.length+')*\n'; overdue.forEach(t=>{msg+='  \u2022 '+t.obj+' ['+fmt(t.end)+']\n';}); msg+='\n'; }
+    if(thisWeek.length > 0){ msg += '\uD83D\uDFE1 *VENCEN ESTA SEMANA ('+thisWeek.length+')*\n'; thisWeek.forEach(t=>{msg+='  \u2022 '+t.obj+' \u2014 vence '+fmt(t.end)+'\n';}); msg+='\n'; }
+    if(inProg.length > 0){ msg += '\uD83D\uDD35 *EN PROCESO ('+inProg.length+')*\n'; inProg.slice(0,3).forEach(t=>{msg+='  \u2022 '+t.obj+'\n';}); if(inProg.length>3)msg+='  _...y '+(inProg.length-3)+' m\u00e1s_\n'; msg+='\n'; }
+    if(overdue.length===0 && thisWeek.length===0 && pending.length>0){ msg+='\u2705 *Todo al d\u00eda* \u2014 '+pending.length+' tareas en seguimiento\n\n'; }
+    msg += '\u2705 Completadas: *'+done.length+'* | Pendientes: *'+pending.length+'*\n';
+    msg += '\n\uD83D\uDD17 https://ibarrahiram-di360.github.io/itradeco-tareas-2026/';
+    const waUrl = 'https://wa.me/'+member.phone+'?text='+encodeURIComponent(msg);
+    const initials = member.name.slice(0,2).toUpperCase();
     const card = document.createElement('div');
     card.className = 'wa-card';
-    card.innerHTML = `
-      <div class="wa-card-hdr">
-        <div class="wa-card-info">
-          <div class="wa-avatar" style="background:${hasAlerts?'#b83232':'#25D366'}">${initials}</div>
-          <div>
-            <div class="wa-name">${member.name}</div>
-            <div class="wa-num">+${member.phone} · ${memberTasks.length} tarea${memberTasks.length!==1?'s':''}</div>
-          </div>
-        </div>
-        <a href="${waUrl}" target="_blank" class="wa-send-btn ${memberTasks.length===0?'disabled':''}">
-          📱 Enviar
-        </a>
-      </div>
-      <div class="wa-stats">
-        <span class="wa-stat red">🔴 Vencidas: <strong>${overdue.length}</strong></span>
-        <span class="wa-stat yellow">🟡 Esta semana: <strong>${thisWeek.length}</strong></span>
-        <span class="wa-stat">🔵 En proceso: <strong>${inProg.length}</strong></span>
-        <span class="wa-stat green">✅ Listas: <strong>${done.length}</strong></span>
-      </div>
-      ${memberTasks.length===0
-        ? '<div class="wa-no-tasks">⚠ Sin tareas asignadas con este nombre. Verifica el campo Responsable en el Sheet.</div>'
-        : `<div class="wa-preview">${msg.replace(/\*/g,'').replace(/_/g,'')}</div>`
-      }
-    `;
+    card.innerHTML =
+      '<div class="wa-card-hdr">'+
+        '<div class="wa-card-info">'+
+          '<div class="wa-avatar" style="background:'+(hasAlerts?'#b83232':'#25D366')+'">'+initials+'</div>'+
+          '<div><div class="wa-name">'+member.name+'</div>'+
+          '<div class="wa-num">+'+member.phone+' \u00B7 '+memberTasks.length+' tarea'+(memberTasks.length!==1?'s':'')+'</div></div>'+
+        '</div>'+
+        '<a href="'+waUrl+'" target="_blank" class="wa-send-btn">\uD83D\uDCF1 Enviar</a>'+
+      '</div>'+
+      '<div class="wa-stats">'+
+        '<span class="wa-stat red">\uD83D\uDD34 Vencidas: <strong>'+overdue.length+'</strong></span>'+
+        '<span class="wa-stat yellow">\uD83D\uDFE1 Esta semana: <strong>'+thisWeek.length+'</strong></span>'+
+        '<span class="wa-stat">\uD83D\uDD35 En proceso: <strong>'+inProg.length+'</strong></span>'+
+        '<span class="wa-stat green">\u2705 Listas: <strong>'+done.length+'</strong></span>'+
+      '</div>'+
+      '<div class="wa-preview">'+msg.replace(/[*]/g,'').replace(/_/g,'')+'</div>';
     body.appendChild(card);
   });
 }
 
-(function init(){
-  const n=new Date();
-  const D=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  document.getElementById('dpill').textContent=`${D[n.getDay()]} ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()}`;
-
-  if(sessionStorage.getItem('itc_auth')==='1'){
-    document.getElementById('lock').classList.add('off');
-    loadTasks();
-  } else {
-    document.getElementById('loading').classList.add('off');
-    setTimeout(()=>document.getElementById('pwd').focus(), 200);
-  }
-})();
-</script>
-</body>
-</html>
