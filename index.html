@@ -10,7 +10,7 @@
     --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:#e2e0d8;
     --text:#1a1916;--muted:#9b9890;
     --austar:#2d7d46;--agro:#c47a1e;--b2b:#1a5fa8;
-    --hil:#7b3fa0;--filkhi:#b83232;--koru:#1d6b6b;--admin:#555;
+    --hil:#7b3fa0;--filkhi:#b83232;--koru:#1d6b6b;--admin:#555;--dulces:#d6457a;
     --plan-c:#1a5fa8;--plan-bg:rgba(26,95,168,.08);
     --prog-c:#c47a1e;--prog-bg:rgba(196,122,30,.08);
     --done-c:#2d7d46;--done-bg:rgba(45,125,70,.08);
@@ -260,6 +260,7 @@
     <button class="nbtn" onclick="setArea('hil',this)"><div class="ndot" style="background:var(--hil)"></div>Soul Living. Real S.<span class="bn" id="b-hil">0</span></button>
     <button class="nbtn" onclick="setArea('filkhi',this)"><div class="ndot" style="background:var(--filkhi)"></div>FILKHI LLC<span class="bn" id="b-filkhi">0</span></button>
     <button class="nbtn" onclick="setArea('koru',this)"><div class="ndot" style="background:var(--koru)"></div>KORU SA<span class="bn" id="b-koru">0</span></button>
+    <button class="nbtn" onclick="setArea('dulces',this)"><div class="ndot" style="background:var(--dulces)"></div>Dulces Fantasía<span class="bn" id="b-dulces">0</span></button>
     <button class="nbtn" onclick="setArea('admin',this)"><div class="ndot" style="background:var(--admin)"></div>L2AB2A<span class="bn" id="b-admin">0</span></button>
     <div class="slbl">Prioridad</div>
     <button class="nbtn" onclick="setPrio('all',this)">Todas</button>
@@ -326,7 +327,7 @@
           <option value="austar">AuStar</option><option value="agro">AgroNetwork</option>
           <option value="b2b">Back2Back</option><option value="hil">Soul Living. Real S.</option>
           <option value="filkhi">FILKHI LLC</option><option value="koru">KORU SA</option>
-          <option value="admin">L2AB2A</option>
+          <option value="dulces">Dulces Fantasía</option><option value="admin">L2AB2A</option>
         </select>
       </div>
       <div class="ff"><label>Sub-grupo</label><input type="text" class="fi" id="m-grp" placeholder="Ej: Comercial, Di360..."></div>
@@ -338,6 +339,8 @@
           <option value="">— Seleccionar responsable —</option>
           <option value="Valeria">Valeria · AuStar / AgroNetwork</option>
           <option value="Yaneth">Yaneth · AuStar</option>
+          <option value="Roberto Gomez">Roberto Gómez · Austar Executive (misiones comerciales)</option>
+          <option value="Julio Rodriguez">Julio Rodríguez · Líder Dulces Fantasía</option>
           <option value="Ale">Ale · Soul Living. Real S.</option>
           <option value="Damian Solis">Damian Solis · Back2Back</option>
           <option value="Hiram">Hiram · FILKHI LLC / KORU SA</option>
@@ -385,6 +388,7 @@ const AM = {
   hil:    {lbl:'Soul Living. Real S.',col:'var(--hil)'},
   filkhi: {lbl:'FILKHI LLC',col:'var(--filkhi)'},
   koru:   {lbl:'KORU SA',col:'var(--koru)'},
+  dulces: {lbl:'Dulces Fantasía',col:'var(--dulces)'},
   admin:  {lbl:'Admin',col:'var(--admin)'},
 };
 const SM = {
@@ -524,14 +528,14 @@ function kpis(){
 }
 function badges(){
   document.getElementById('b-all').textContent=tasks.length;
-  ['austar','agro','b2b','hil','filkhi','koru','admin'].forEach(a=>{
+  ['austar','agro','b2b','hil','filkhi','koru','dulces','admin'].forEach(a=>{
     const el=document.getElementById('b-'+a);
     if(el)el.textContent=tasks.filter(t=>t.area===a).length;
   });
 }
 
 // ─── FILTROS ─────────────────────────────────────────────────
-function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'Soul Living. Real S.',filkhi:'FILKHI LLC',koru:'KORU SA',admin:'L2AB2A'};document.getElementById('vtitle').textContent=n[a]||a;render();}
+function setArea(a,btn){aF=a;document.querySelectorAll('.sidebar .nbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const n={all:'Todas las tareas',austar:'AuStar',agro:'AgroNetwork',b2b:'Back2Back',hil:'Soul Living. Real S.',filkhi:'FILKHI LLC',koru:'KORU SA',dulces:'Dulces Fantasía',admin:'L2AB2A'};document.getElementById('vtitle').textContent=n[a]||a;render();}
 function setSt(s,btn){sF=s;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
 function setPrio(p){pF=p;render();}
 function doQ(v){q=v;render();}
@@ -690,6 +694,8 @@ const WA_TEAM = [
   { name: 'Paty Barrera', phone: '523313527283', email: 'contraloria@austar.mx' },
   { name: 'Kath',     phone: '523318451206', email: 'contaduria@austar.mx' },
   { name: 'Valeria',  phone: '523322173082', email: 'valeria.alvarez@itradeco.mx' },
+  { name: 'Julio Rodriguez', phone: '526673613395', email: '' },
+  { name: 'Roberto Gomez', phone: '523310190916', email: '' },
 ];
 
 function openWAPanel(){
