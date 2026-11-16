@@ -154,6 +154,22 @@
   .dt.sn{color:var(--prog-c);font-weight:600;}
   .empty{padding:50px 20px;text-align:center;color:var(--muted);font-size:14px;}
 
+  /* OBJETIVOS 30·60·90 */
+  .objp{display:none;margin-bottom:18px;}
+  .objp.on{display:block;}
+  .objp-h{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .objg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .objc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;border-top:3px solid var(--text);}
+  .objc:hover{box-shadow:0 2px 10px rgba(26,25,22,.08);}
+  .objc .oh{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:8px;}
+  .objc .ot{font-size:13px;line-height:1.45;margin:8px 0;}
+  .objc .om{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:8px;}
+  .objc .ob{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+  .objc .ob>i{display:block;height:100%;background:var(--text);}
+  .objc .op{font-size:11px;color:var(--muted);margin-top:5px;}
+  .objc .op.warn{color:var(--delay-c);font-weight:600;}
+  @media(max-width:900px){.objg{grid-template-columns:1fr;}}
+
   /* MODAL */
   .ovl{display:none;position:fixed;inset:0;background:rgba(26,25,22,.5);backdrop-filter:blur(3px);z-index:500;align-items:center;justify-content:center;}
   .ovl.open{display:flex;}
@@ -302,6 +318,8 @@
       <button class="chip" onclick="setSt('wait',this)">⏸ En espera</button>
       <div class="srch"><span style="color:var(--muted);font-size:13px">🔍</span><input type="text" placeholder="Buscar tarea..." oninput="doQ(this.value)"></div>
     </div>
+
+    <div class="objp" id="objpanel"></div>
 
     <div class="twrap">
       <table>
@@ -480,8 +498,41 @@ function sB(s){const[c,l]=SM[s]||['splan',s];return`<span class="st ${c}"><span 
 function owC(o){if(!o)return'<span style="color:var(--muted);font-size:12px">—</span>';const sh=o.length>16?o.slice(0,16)+'…':o;const ini=o.split(/[@.\s]/).filter(Boolean).map(w=>w[0]?.toUpperCase()||'').join('').slice(0,2);return`<div class="ow"><div class="av">${ini}</div>${sh}</div>`;}
 
 // ─── RENDER ──────────────────────────────────────────────────
+// ─── OBJETIVOS 30·60·90 ──────────────────────────────────────
+function isObj(t){return (t.obj||'').indexOf('🎯')===0;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderObj(){
+  const el=document.getElementById('objpanel');
+  if(!el)return;
+  if(aF==='all'){el.className='objp';el.innerHTML='';return;}
+  const objs=tasks.filter(t=>t.area===aF&&isObj(t)).sort((a,b)=>(a.end||'').localeCompare(b.end||''));
+  if(!objs.length){el.className='objp';el.innerHTML='';return;}
+  const col=AM[aF]?.col||'#555';
+  const cards=objs.map(o=>{
+    const m=(o.obj||'').match(/(30|60|90)\s*d[ií]as/i);
+    const h=m?m[1]:'';
+    const txt=esc((o.obj||'').replace(/^🎯\s*/,'').replace(/^(30|60|90)\s*d[ií]as\s*:\s*/i,''));
+    const lig=tasks.filter(t=>t.area===aF&&!isObj(t)&&h&&(t.not||'').trim().indexOf('['+h+']')===0);
+    const dn=lig.filter(t=>t.st==='done').length;
+    const pct=lig.length?Math.round(dn/lig.length*100):0;
+    const prog=lig.length?`${dn} de ${lig.length} tareas hechas · ${pct}%`:'⚠ Sin tareas ligadas a este objetivo';
+    const metrica=esc((o.not||'').replace(/^\[\d+\]\s*/,''));
+    return `<div class="objc" style="border-top-color:${col}" onclick='openEdit(tasks.find(x=>x.id===${JSON.stringify(o.id)}))'>
+      <div class="oh"><span>🎯 ${h?h+' días':'Objetivo'}</span><span class="${dcls(o.end,o.st)}">${fmt(o.end)}</span></div>
+      <div class="ot">${txt}</div>
+      <div class="om">${metrica}</div>
+      <div class="ob"><i style="width:${pct}%;background:${col}"></i></div>
+      <div class="op ${lig.length?'':'warn'}">${prog}</div>
+    </div>`;
+  }).join('');
+  el.className='objp on';
+  el.innerHTML=`<div class="objp-h">Objetivos 30 · 60 · 90 días — ${esc(AM[aF]?.lbl||aF)}</div><div class="objg">${cards}</div>`;
+}
+
 function render(){
+  renderObj();
   const fil=tasks.filter(t=>{
+    if(isObj(t))return false;
     if(aF!=='all'&&t.area!==aF)return false;
     if(sF!=='all'&&t.st!==sF)return false;
     if(pF!=='all'&&t.prio!==pF)return false;
@@ -512,7 +563,7 @@ function render(){
 }
 
 function kpis(){
-  const t=tasks;
+  const t=tasks.filter(x=>!isObj(x));
   const don=t.filter(x=>x.st==='done').length;
   const pro=t.filter(x=>x.st==='prog').length;
   const del=t.filter(x=>x.st==='delay').length;
@@ -527,10 +578,10 @@ function kpis(){
   document.getElementById('k-wai').textContent=wai;
 }
 function badges(){
-  document.getElementById('b-all').textContent=tasks.length;
+  document.getElementById('b-all').textContent=tasks.filter(t=>!isObj(t)).length;
   ['austar','agro','b2b','hil','filkhi','koru','dulces','admin'].forEach(a=>{
     const el=document.getElementById('b-'+a);
-    if(el)el.textContent=tasks.filter(t=>t.area===a).length;
+    if(el)el.textContent=tasks.filter(t=>t.area===a&&!isObj(t)).length;
   });
 }
 
